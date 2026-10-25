@@ -128,8 +128,8 @@ public class CourierController {
         if (o.getCourierId() != null) {
             throw ApiException.conflict("ALREADY_CLAIMED", "Order is already assigned");
         }
-        o.setCourierId(c.getUserId());
         orderService.transition(o, OrderStatus.COURIER_ASSIGNED, Actor.COURIER, c.getUserId(), null);
+        o.setCourierId(c.getUserId());
         return toDto(o, true);
     }
 

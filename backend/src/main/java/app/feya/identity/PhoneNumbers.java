@@ -23,7 +23,7 @@ public final class PhoneNumbers {
         if (digits.length() < 8 || digits.length() > 15 || digits.startsWith("0")) {
             throw ApiException.badRequest("INVALID_PHONE", "Invalid phone number");
         }
-        if (digits.startsWith("7") && digits.length() != 11) {
+        if (digits.startsWith("7") && (digits.length() != 11 || "012".indexOf(digits.charAt(1)) >= 0)) {
             throw ApiException.badRequest("INVALID_PHONE", "Invalid phone number");
         }
         return "+" + digits;

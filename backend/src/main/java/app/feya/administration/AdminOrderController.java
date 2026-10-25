@@ -139,8 +139,8 @@ public class AdminOrderController {
         if (o.getStatus() != OrderStatus.READY_FOR_PICKUP) {
             throw ApiException.conflict("INVALID_TRANSITION", "Order must be ready for pickup");
         }
-        o.setCourierId(c.getUserId());
         orderService.transition(o, OrderStatus.COURIER_ASSIGNED, actor(), Auth.userId(), "assigned by staff");
+        o.setCourierId(c.getUserId());
         audit.record("ORDER_COURIER_ASSIGNED", "ORDER", o.getId(), c.getUserId().toString());
         return detail(o);
     }

@@ -27,6 +27,8 @@ public class DeliveryService {
     private final DeliveryZoneRepository zones;
     private final DeliverySlotTemplateRepository templates;
     private final JdbcTemplate jdbc;
+    @jakarta.persistence.PersistenceContext
+    private jakarta.persistence.EntityManager em;
     private final Clock clock;
     private final ZoneId businessZone;
 
@@ -184,6 +186,7 @@ public class DeliveryService {
     }
 
     int usage(UUID templateId, LocalDate date) {
+        em.flush(); // pending orders of the current transaction must be visible to the native count
         Integer n = jdbc.queryForObject("""
                 select count(*) from orders where slot_template_id = ? and delivery_date = ?
                 and status not in ('CANCELLED','PAYMENT_FAILED','REFUNDED')""", Integer.class, templateId, date);

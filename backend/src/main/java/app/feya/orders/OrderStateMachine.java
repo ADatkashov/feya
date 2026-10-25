@@ -48,7 +48,7 @@ public final class OrderStateMachine {
         allow(PICKED_UP, ON_THE_WAY, COURIER, ADMIN);
         allow(ON_THE_WAY, DELIVERED, COURIER, ADMIN);
 
-        allow(DELIVERED, REFUNDED, ADMIN, SUPPORT);
+        allow(DELIVERED, REFUNDED, ADMIN, SUPPORT, SYSTEM); // SYSTEM completes an admin-initiated refund
         allow(CANCELLED, REFUNDED, SYSTEM, ADMIN);
     }
 

@@ -16,7 +16,7 @@ public class ProductionGuard {
     }
 
     @PostConstruct
-    void validate() {
+    public void validate() {
         String secret = props.jwt() == null ? null : props.jwt().secret();
         if (secret == null || secret.getBytes().length < 32) {
             throw new IllegalStateException("FEYA_JWT_SECRET must be set and at least 32 bytes long");

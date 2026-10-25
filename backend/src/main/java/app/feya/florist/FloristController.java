@@ -122,7 +122,7 @@ public class FloristController {
 
     private FloristOrder act(UUID id, OrderStatus to, String note) {
         OrderEntity o = orders.lockById(id).orElseThrow(() -> ApiException.notFound("Order"));
-        UUID fid = context.resolve(o.getFloristId());
+        UUID fid = context.resolve(null); // null for admins (any shop), the caller's own shop for florists
         if (fid != null && !fid.equals(o.getFloristId())) {
             throw ApiException.notFound("Order");
         }
