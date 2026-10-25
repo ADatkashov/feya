@@ -8,7 +8,14 @@ import 'package:flutter_test/flutter_test.dart';
 import 'support/fake_backend.dart';
 
 Variant variant(String id, {double price = 10000, int max = 5}) => Variant(
-    id: id, code: 'STANDARD', label: 'Стандартный', price: price, stemsCount: 15, available: max > 0, maxQuantity: max);
+  id: id,
+  code: 'STANDARD',
+  label: 'Стандартный',
+  price: price,
+  stemsCount: 15,
+  available: max > 0,
+  maxQuantity: max,
+);
 
 void main() {
   late ProviderContainer c;
@@ -17,8 +24,15 @@ void main() {
     c = await buildContainer(standardBackend());
   });
 
-  void add(String id, {int qty = 1, int max = 5}) => c.read(cartProvider.notifier).add(
-      productId: 'p-$id', productName: 'Букет $id', variant: variant(id, max: max), imageUrl: null, quantity: qty);
+  void add(String id, {int qty = 1, int max = 5}) => c
+      .read(cartProvider.notifier)
+      .add(
+        productId: 'p-$id',
+        productName: 'Букет $id',
+        variant: variant(id, max: max),
+        imageUrl: null,
+        quantity: qty,
+      );
 
   test('adding the same variant merges quantities', () {
     add('a');
@@ -43,9 +57,15 @@ void main() {
     add('a');
     add('b');
     c.read(cartProvider.notifier).setQuantity('a', 4);
-    expect(c.read(cartProvider).firstWhere((l) => l.variantId == 'a').quantity, 4);
+    expect(
+      c.read(cartProvider).firstWhere((l) => l.variantId == 'a').quantity,
+      4,
+    );
     c.read(cartProvider.notifier).setQuantity('a', 999);
-    expect(c.read(cartProvider).firstWhere((l) => l.variantId == 'a').quantity, kMaxQuantityPerLine);
+    expect(
+      c.read(cartProvider).firstWhere((l) => l.variantId == 'a').quantity,
+      kMaxQuantityPerLine,
+    );
     c.read(cartProvider.notifier).setQuantity('a', 0);
     expect(c.read(cartProvider).map((l) => l.variantId), ['b']);
   });
@@ -63,31 +83,50 @@ void main() {
     add('a', qty: 2);
     final raw = c.read(sharedPrefsProvider).getString('feya.cart.v1');
     expect(raw, isNotNull);
-    final restored = await buildContainer(standardBackend(), prefs: {'feya.cart.v1': raw!});
+    final restored = await buildContainer(
+      standardBackend(),
+      prefs: {'feya.cart.v1': raw!},
+    );
     final lines = restored.read(cartProvider);
     expect(lines.single.variantId, 'a');
     expect(lines.single.quantity, 2);
   });
 
   test('a corrupted persisted cart is ignored instead of crashing', () async {
-    final broken = await buildContainer(standardBackend(), prefs: {'feya.cart.v1': '{not json'});
+    final broken = await buildContainer(
+      standardBackend(),
+      prefs: {'feya.cart.v1': '{not json'},
+    );
     expect(broken.read(cartProvider), isEmpty);
   });
 
-  test('the quote comes from the server, not from client-side arithmetic', () async {
-    add('v-m', qty: 2);
-    final q = await c.read(quoteProvider.future);
-    expect(q!.subtotal, 47800);
-    expect(q.deliveryFee, 0); // above the free-delivery threshold, decided by the server
-    expect(q.total, 47800);
-    final backend = standardBackend();
-    final c2 = await buildContainer(backend);
-    c2.read(cartProvider.notifier).add(productId: 'p', productName: 'x', variant: variant('v-s', price: 1), imageUrl: null);
-    final q2 = await c2.read(quoteProvider.future);
-    // the local snapshot price (1) is ignored: the server says 15 900 + 1 500 delivery
-    expect(q2!.subtotal, 15900);
-    expect(q2.total, 17400);
-  });
+  test(
+    'the quote comes from the server, not from client-side arithmetic',
+    () async {
+      add('v-m', qty: 2);
+      final q = await c.read(quoteProvider.future);
+      expect(q!.subtotal, 47800);
+      expect(
+        q.deliveryFee,
+        0,
+      ); // above the free-delivery threshold, decided by the server
+      expect(q.total, 47800);
+      final backend = standardBackend();
+      final c2 = await buildContainer(backend);
+      c2
+          .read(cartProvider.notifier)
+          .add(
+            productId: 'p',
+            productName: 'x',
+            variant: variant('v-s', price: 1),
+            imageUrl: null,
+          );
+      final q2 = await c2.read(quoteProvider.future);
+      // the local snapshot price (1) is ignored: the server says 15 900 + 1 500 delivery
+      expect(q2!.subtotal, 15900);
+      expect(q2.total, 17400);
+    },
+  );
 
   test('an empty cart has no quote', () async {
     expect(await c.read(quoteProvider.future), isNull);
@@ -96,9 +135,20 @@ void main() {
   test('checkout: changing the delivery zone clears the chosen slot', () {
     final ctl = c.read(checkoutProvider.notifier);
     ctl.setAddress(addressId: 'a1', address: null, zoneId: 'z1');
-    ctl.chooseSlot(const SlotChoice(templateId: 't', date: '2026-11-03', start: '12:00', end: '14:00'));
+    ctl.chooseSlot(
+      const SlotChoice(
+        templateId: 't',
+        date: '2026-11-03',
+        start: '12:00',
+        end: '14:00',
+      ),
+    );
     expect(c.read(checkoutProvider).slot, isNotNull);
-    ctl.setAddress(addressId: 'a1', address: null, zoneId: 'z1'); // same zone keeps it
+    ctl.setAddress(
+      addressId: 'a1',
+      address: null,
+      zoneId: 'z1',
+    ); // same zone keeps it
     expect(c.read(checkoutProvider).slot, isNotNull);
     ctl.setAddress(addressId: 'a2', address: null, zoneId: 'z2');
     expect(c.read(checkoutProvider).slot, isNull);
@@ -107,11 +157,25 @@ void main() {
 
   test('checkout: ASAP and a scheduled slot are mutually exclusive', () {
     final ctl = c.read(checkoutProvider.notifier);
-    ctl.chooseSlot(const SlotChoice(templateId: 't', date: '2026-11-03', start: '12:00', end: '14:00'));
+    ctl.chooseSlot(
+      const SlotChoice(
+        templateId: 't',
+        date: '2026-11-03',
+        start: '12:00',
+        end: '14:00',
+      ),
+    );
     ctl.chooseAsap();
     expect(c.read(checkoutProvider).asap, isTrue);
     expect(c.read(checkoutProvider).slot, isNull);
-    ctl.chooseSlot(const SlotChoice(templateId: 't', date: '2026-11-03', start: '12:00', end: '14:00'));
+    ctl.chooseSlot(
+      const SlotChoice(
+        templateId: 't',
+        date: '2026-11-03',
+        start: '12:00',
+        end: '14:00',
+      ),
+    );
     expect(c.read(checkoutProvider).asap, isFalse);
   });
 

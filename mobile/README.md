@@ -1,17 +1,14 @@
-# feya
+# FEYA mobile
 
-FEYA flower delivery
+Клиентское приложение (Flutter). Полное описание проекта — в [корневом README](../README.md), архитектура —
+в [docs/ARCHITECTURE.md](../docs/ARCHITECTURE.md).
 
-## Getting Started
+```bash
+flutter pub get
+flutter run --dart-define=API_BASE_URL=http://10.0.2.2:8080   # эмулятор Android → бэкенд на хосте
+flutter analyze && flutter test
+```
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Конфигурация только через `--dart-define` (`API_BASE_URL`, `MAP_LINK_TEMPLATE`, `SUPPORT_PHONE`, `SUPPORT_WHATSAPP`,
+`PRIVACY_URL`, `TERMS_URL`). Секретов в приложении нет. Строки интерфейса: `../tools/i18n_strings.py` → `lib/l10n/*.arb`.
+Шрифт Inter (SIL OFL 1.1) лежит в `assets/fonts/` вместе с лицензией.

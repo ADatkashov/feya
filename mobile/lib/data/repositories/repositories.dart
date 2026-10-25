@@ -1,6 +1,9 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:dio/dio.dart' show CancelToken;
+import 'package:flutter/foundation.dart' show kIsWeb;
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../core/network/api_client.dart';
@@ -480,31 +483,55 @@ class OrderRepository {
   Future<Tracking> tracking(String id) async =>
       Tracking.fromJson(_map(await _api.get('/orders/$id/tracking')));
 
-  /// Live updates: tries server-sent events first and transparently falls back to polling every [poll].
+  /// Live updates. Polling starts immediately and always runs (the guaranteed fallback); where the platform can
+  /// stream HTTP responses (not Flutter web) a server-sent-events connection delivers changes sooner.
   Stream<Tracking> watchTracking(
     String id, {
     Duration poll = const Duration(seconds: 10),
-  }) async* {
-    var sseWorking = false;
-    try {
-      await for (final json in _api.events('/orders/$id/tracking/stream')) {
-        sseWorking = true;
-        yield Tracking.fromJson(json);
-      }
-    } catch (_) {
-      // fall through to polling
-    }
-    if (sseWorking) {
-      // the stream ended normally (server timeout): pick up with polling instead of silently stalling
-    }
-    while (true) {
+  }) {
+    late final StreamController<Tracking> controller;
+    Timer? timer;
+    CancelToken? cancel;
+    var closed = false;
+
+    Future<void> pollOnce() async {
       try {
-        yield await tracking(id);
+        final t = await tracking(id);
+        if (!closed) controller.add(t);
       } on ApiException catch (e) {
-        if (e.status == 404 || e.status == 401) rethrow;
+        // A missing/forbidden order is final; transient network errors are retried on the next tick.
+        if (!closed && (e.status == 404 || e.status == 401 || e.status == 403))
+          controller.addError(e);
       }
-      await Future<void>.delayed(poll);
     }
+
+    Future<void> listenSse() async {
+      cancel = CancelToken();
+      try {
+        await for (final json in _api.events(
+          '/orders/$id/tracking/stream',
+          cancel: cancel,
+        )) {
+          if (!closed) controller.add(Tracking.fromJson(json));
+        }
+      } catch (_) {
+        // SSE is optional: polling continues.
+      }
+    }
+
+    controller = StreamController<Tracking>(
+      onListen: () {
+        pollOnce();
+        timer = Timer.periodic(poll, (_) => pollOnce());
+        if (!kIsWeb) listenSse();
+      },
+      onCancel: () {
+        closed = true;
+        timer?.cancel();
+        cancel?.cancel();
+      },
+    );
+    return controller.stream;
   }
 }
 

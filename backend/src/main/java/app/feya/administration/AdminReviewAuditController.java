@@ -77,6 +77,7 @@ public class AdminReviewAuditController {
     }
 
     @GetMapping("/audit")
+    @org.springframework.security.access.prepost.PreAuthorize("hasRole('ADMIN')")
     @Transactional(readOnly = true)
     public PageResponse<AuditRow> audit(@RequestParam(required = false) String entityType,
                                         @RequestParam(required = false) String entityId,

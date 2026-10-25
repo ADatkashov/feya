@@ -1,0 +1,46 @@
+# Local development stack: PostgreSQL + backend (+ optional Flutter web build behind nginx).
+#   cp .env.example .env && docker compose up --build
+# The default profile is `dev` (dev OTP codes, sandbox payments, seed catalog). NEVER run it that way in production:
+# see docs/DEPLOYMENT.md for the production environment variables.
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-feya}
+      POSTGRES_USER: ${POSTGRES_USER:-feya}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in .env}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-feya} -d ${POSTGRES_DB:-feya}"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    ports:
+      - "127.0.0.1:5432:5432"
+
+  backend:
+    build: ./backend
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE:-dev}
+      FEYA_ENV: ${FEYA_ENV:-dev}
+      FEYA_DB_URL: jdbc:postgresql://postgres:5432/${POSTGRES_DB:-feya}
+      FEYA_DB_USER: ${POSTGRES_USER:-feya}
+      FEYA_DB_PASSWORD: ${POSTGRES_PASSWORD}
+      FEYA_JWT_SECRET: ${FEYA_JWT_SECRET:?set FEYA_JWT_SECRET in .env (at least 32 characters)}
+      FEYA_DEV_OTP_ENABLED: ${FEYA_DEV_OTP_ENABLED:-true}
+      FEYA_PAYMENTS_PROVIDER: ${FEYA_PAYMENTS_PROVIDER:-sandbox}
+      FEYA_PAYMENTS_WEBHOOK_SECRET: ${FEYA_PAYMENTS_WEBHOOK_SECRET:-change-me-webhook-secret}
+      FEYA_CORS_ALLOWED_ORIGIN_PATTERNS: ${FEYA_CORS_ALLOWED_ORIGIN_PATTERNS:-http://localhost:*}
+      FEYA_MEDIA_BASE_URL: ${FEYA_MEDIA_BASE_URL:-}
+    volumes:
+      - uploads:/data/uploads
+    ports:
+      - "8080:8080"
+
+volumes:
+  pgdata:
+  uploads:

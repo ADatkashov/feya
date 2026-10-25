@@ -82,6 +82,7 @@ feya:
     allowed-origin-patterns: ${FEYA_CORS_ALLOWED_ORIGIN_PATTERNS:}
   media:
     base-url: ${FEYA_MEDIA_BASE_URL:}
+    upload-dir: ${FEYA_MEDIA_UPLOAD_DIR:uploads}
   orders:
     pending-payment-ttl: PT30M
     max-quantity-per-line: 20

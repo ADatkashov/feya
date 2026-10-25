@@ -24,6 +24,12 @@ public class WebConfig implements WebMvcConfigurer {
     }
 
     @Override
+    public void addViewControllers(org.springframework.web.servlet.config.annotation.ViewControllerRegistry registry) {
+        registry.addRedirectViewController("/admin", "/admin/index.html");
+        registry.addRedirectViewController("/admin/", "/admin/index.html");
+    }
+
+    @Override
     public void addResourceHandlers(org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry registry) {
         String dir = java.nio.file.Path.of(props.media().uploadDir()).toAbsolutePath().toUri().toString();
         registry.addResourceHandler("/media/uploads/**").addResourceLocations(dir);
