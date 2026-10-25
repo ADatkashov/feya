@@ -111,6 +111,10 @@ public class SecurityConfig {
         cfg.setMaxAge(3600L);
         UrlBasedCorsConfigurationSource src = new UrlBasedCorsConfigurationSource();
         src.registerCorsConfiguration("/api/**", cfg);
+        // Web builds of the app load product images cross-origin (canvas rendering needs CORS on media too).
+        CorsConfiguration media = new CorsConfiguration(cfg);
+        media.setAllowedMethods(List.of("GET", "HEAD", "OPTIONS"));
+        src.registerCorsConfiguration("/media/**", media);
         return src;
     }
 }

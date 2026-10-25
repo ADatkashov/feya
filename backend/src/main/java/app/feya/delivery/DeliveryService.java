@@ -186,7 +186,9 @@ public class DeliveryService {
     }
 
     int usage(UUID templateId, LocalDate date) {
-        em.flush(); // pending orders of the current transaction must be visible to the native count
+        if (org.springframework.transaction.support.TransactionSynchronizationManager.isActualTransactionActive()) {
+            em.flush(); // pending orders of the current transaction must be visible to the native count
+        }
         Integer n = jdbc.queryForObject("""
                 select count(*) from orders where slot_template_id = ? and delivery_date = ?
                 and status not in ('CANCELLED','PAYMENT_FAILED','REFUNDED')""", Integer.class, templateId, date);
