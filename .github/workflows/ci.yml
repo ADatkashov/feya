@@ -1,0 +1,97 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  backend:
+    name: Backend (tests + build)
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_DB: feya_test
+          POSTGRES_USER: feya
+          POSTGRES_PASSWORD: feya
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U feya -d feya_test"
+          --health-interval 5s --health-timeout 3s --health-retries 10
+    env:
+      FEYA_TEST_DB_URL: jdbc:postgresql://localhost:5432/feya_test
+      FEYA_TEST_DB_USER: feya
+      FEYA_TEST_DB_PASSWORD: feya
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+          cache: gradle
+      - name: Test
+        run: ./gradlew test --no-daemon
+      - name: Build jar
+        run: ./gradlew bootJar --no-daemon -x test
+      - name: Upload test report
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: backend-test-report
+          path: backend/build/reports/tests/test
+
+  mobile:
+    name: Mobile (analyze + test + web build)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: mobile
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.47.8"
+          channel: stable
+          cache: true
+      - run: flutter pub get
+      - name: Format check
+        run: dart format --output=none --set-exit-if-changed lib test
+      - name: Analyze
+        run: flutter analyze
+      - name: Test
+        run: flutter test
+      - name: Build web (smoke test that the app compiles)
+        run: flutter build web --release --no-web-resources-cdn --dart-define=API_BASE_URL=https://api.example.invalid
+
+  docker:
+    name: Docker image + compose config
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate compose file
+        run: |
+          cp .env.example .env
+          docker compose config -q
+      - name: Build backend image
+        run: docker build -t feya-backend:ci backend
+
+  secrets-scan:
+    name: No committed secrets
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Look for private keys and env files
+        run: |
+          if git ls-files | grep -E '(^|/)\.env$|\.pem$|\.jks$|google-services\.json$|GoogleService-Info\.plist$'; then
+            echo "Sensitive file committed"; exit 1; fi
+          if git grep -nE -- '-----BEGIN (RSA |EC |OPENSSH )?PRIVATE KEY-----'; then
+            echo "Private key committed"; exit 1; fi

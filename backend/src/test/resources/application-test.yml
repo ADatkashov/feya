@@ -1,0 +1,21 @@
+# Integration tests run against a real PostgreSQL (CI uses a service container; locally see docs/DEVELOPMENT.md).
+spring:
+  datasource:
+    url: ${FEYA_TEST_DB_URL:jdbc:postgresql://localhost:5432/feya_test}
+    username: ${FEYA_TEST_DB_USER:feya}
+    password: ${FEYA_TEST_DB_PASSWORD:feya}
+  flyway:
+    locations: classpath:db/migration,classpath:db/seed-dev
+feya:
+  env: dev
+  jwt:
+    secret: dev-only-test-secret-dev-only-test-secret-0123456789
+  auth:
+    dev-otp-enabled: true
+  payments:
+    provider: sandbox
+    webhook-secret: dev-only-test-webhook-secret
+  rate-limit:
+    enabled: false
+  media:
+    upload-dir: ${java.io.tmpdir}/feya-test-uploads

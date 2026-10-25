@@ -1,0 +1,23 @@
+# Local development profile. NEVER use in production: dev OTP, sandbox payments and seed data are enabled.
+spring:
+  datasource:
+    password: ${FEYA_DB_PASSWORD:feya}
+  flyway:
+    locations: classpath:db/migration,classpath:db/seed-dev
+feya:
+  env: dev
+  jwt:
+    secret: ${FEYA_JWT_SECRET:dev-only-secret-dev-only-secret-dev-only-secret-0123456789}
+  auth:
+    dev-otp-enabled: true
+  payments:
+    provider: sandbox
+    webhook-secret: ${FEYA_PAYMENTS_WEBHOOK_SECRET:dev-only-webhook-secret}
+  cors:
+    allowed-origin-patterns: http://localhost:*,http://127.0.0.1:*
+springdoc:
+  swagger-ui:
+    enabled: true
+logging:
+  level:
+    app.feya: DEBUG

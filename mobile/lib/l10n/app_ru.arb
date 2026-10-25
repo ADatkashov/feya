@@ -1,0 +1,432 @@
+{
+  "@@locale": "ru",
+  "navHome": "Главная",
+  "navCatalog": "Каталог",
+  "navCart": "Корзина",
+  "navOrders": "Заказы",
+  "navProfile": "Профиль",
+  "retry": "Повторить",
+  "tryAgain": "Попробовать снова",
+  "close": "Закрыть",
+  "back": "Назад",
+  "save": "Сохранить",
+  "saved": "Сохранено",
+  "edit": "Изменить",
+  "delete": "Удалить",
+  "more": "Ещё",
+  "clear": "Очистить",
+  "apply": "Применить",
+  "submit": "Отправить",
+  "no": "Нет",
+  "yesCancel": "Да, отменить",
+  "all": "Все",
+  "seeAll": "Все",
+  "free": "Бесплатно",
+  "and": "и",
+  "increase": "Увеличить количество",
+  "decrease": "Уменьшить количество",
+  "fieldRequired": "Обязательное поле",
+  "name": "Имя",
+  "email": "Электронная почта",
+  "phone": "Телефон",
+  "language": "Язык",
+  "settings": "Настройки",
+  "account": "Аккаунт",
+  "quantity": "Количество",
+  "unavailable": "Недоступно",
+  "outOfStock": "Нет в наличии",
+  "itemsCount": "{count, plural, one{{count} товар} few{{count} товара} many{{count} товаров} other{{count} товара}}",
+  "@itemsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "stems": "{count, plural, one{{count} стебель} few{{count} стебля} many{{count} стеблей} other{{count} стебля}}",
+  "@stems": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "errGeneric": "Что-то пошло не так. Попробуйте ещё раз.",
+  "errNetwork": "Нет соединения с сервером. Проверьте интернет.",
+  "errServer": "Сервис временно недоступен. Попробуйте позже.",
+  "errForbidden": "Недостаточно прав для этого действия.",
+  "errSessionExpired": "Сессия истекла. Войдите снова.",
+  "errValidation": "Проверьте введённые данные.",
+  "errInvalidPhone": "Введите корректный номер телефона",
+  "errOtpInvalid": "Неверный или просроченный код",
+  "errTooManyRequests": "Слишком много запросов. Попробуйте позже.",
+  "errSlotFull": "Это время уже занято. Выберите другое.",
+  "errSlotUnavailable": "Выбранное время недоступно. Выберите другое.",
+  "errAsapUnavailable": "Срочная доставка сейчас недоступна.",
+  "errNotDeliverable": "Мы пока не доставляем по этому адресу.",
+  "errItemsUnavailable": "Некоторые товары закончились. Обновите корзину.",
+  "errTooManyUnpaid": "Сначала оплатите или отмените неоплаченные заказы.",
+  "errPaymentsUnavailable": "Онлайн-оплата сейчас недоступна.",
+  "errOrderNotPayable": "Этот заказ нельзя оплатить.",
+  "errReviewExists": "Вы уже оставили отзыв на этот букет.",
+  "promoCode": "Промокод",
+  "promoApplied": "Промокод применён: −{amount}",
+  "@promoApplied": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "promoNotFound": "Промокод не найден",
+  "promoExpired": "Срок действия промокода истёк",
+  "promoMinOrder": "Сумма заказа меньше минимальной для промокода",
+  "promoUsed": "Промокод уже использован",
+  "deliveryTo": "Доставка",
+  "deliveryArea": "Зона доставки",
+  "zoneFeeHint": "Доставка от {fee} ₸, бесплатно от {free} ₸",
+  "@zoneFeeHint": {
+    "placeholders": {
+      "fee": {
+        "type": "int"
+      },
+      "free": {
+        "type": "int"
+      }
+    }
+  },
+  "searchBouquets": "Найти букет",
+  "featured": "Хиты FEYA",
+  "popular": "Популярное",
+  "newArrivals": "Новинки",
+  "seasonal": "Сезонные цветы",
+  "recentlyViewed": "Вы смотрели",
+  "nothingAvailable": "Сейчас нет доступных букетов",
+  "nothingAvailableHint": "Попробуйте другую зону доставки или загляните позже.",
+  "nothingFound": "Ничего не найдено",
+  "nothingFoundHint": "Измените запрос или сбросьте фильтры.",
+  "resetFilters": "Сбросить фильтры",
+  "sortBy": "Сортировка",
+  "sortPopular": "Популярные",
+  "sortNew": "Новинки",
+  "sortPriceAsc": "Сначала дешевле",
+  "sortPriceDesc": "Сначала дороже",
+  "sortRating": "По рейтингу",
+  "fromPrice": "от {price}",
+  "@fromPrice": {
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "addToFavorites": "Добавить в избранное",
+  "removeFromFavorites": "Убрать из избранного",
+  "loginToFavorite": "Войдите, чтобы сохранять избранное",
+  "chooseSize": "Размер букета",
+  "composition": "Состав",
+  "description": "Описание",
+  "productNotFound": "Букет не найден",
+  "productUnavailable": "Сейчас этого букета нет в наличии для вашей зоны доставки.",
+  "preparationTime": "Собираем и доставляем от {minutes} мин",
+  "@preparationTime": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "addToCartPrice": "В корзину · {price}",
+  "@addToCartPrice": {
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "addedToCart": "Добавлено в корзину",
+  "reviews": "Отзывы",
+  "writeReview": "Написать отзыв",
+  "reviewHint": "Расскажите о букете (необязательно)",
+  "reviewThanks": "Спасибо за отзыв!",
+  "reviewNotEligible": "Отзыв можно оставить после получения этого букета.",
+  "noReviews": "Отзывов пока нет",
+  "verifiedPurchase": "Подтверждённая покупка",
+  "relatedProducts": "Похожие букеты",
+  "cartEmpty": "Корзина пуста",
+  "cartEmptyHint": "Выберите букет — мы соберём и доставим его в срок.",
+  "goToCatalog": "Перейти в каталог",
+  "cartHasIssues": "Некоторые товары недоступны или их стало меньше.",
+  "fixCart": "Исправить",
+  "onlyLeft": "Осталось только {count} шт.",
+  "@onlyLeft": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "subtotal": "Товары",
+  "discount": "Скидка",
+  "delivery": "Доставка",
+  "total": "Итого",
+  "deliveryDependsOnAddress": "Стоимость доставки уточнится по адресу и времени.",
+  "checkout": "Оформление заказа",
+  "checkoutWithTotal": "Оформить заказ · {total}",
+  "@checkoutWithTotal": {
+    "placeholders": {
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "deliveryAddress": "Адрес доставки",
+  "addAddress": "Добавить адрес",
+  "chooseAddress": "Выберите адрес доставки",
+  "chooseAddressFirst": "Сначала выберите адрес — мы покажем доступное время.",
+  "deliveryTime": "Время доставки",
+  "asapDelivery": "Как можно скорее",
+  "asapHint": "Примерно за {minutes} мин · +{fee}",
+  "@asapHint": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      },
+      "fee": {
+        "type": "String"
+      }
+    }
+  },
+  "asapUnavailable": "Сейчас недоступно — выберите время ниже",
+  "scheduledDelivery": "Доставка к определённому времени",
+  "noSlotsForDay": "На этот день нет доступных интервалов",
+  "slotClosed": "Приём заказов на это время закрыт",
+  "chooseDeliveryTime": "Выберите время доставки",
+  "recipientAndGift": "Получатель и подарок",
+  "deliverToSomeoneElse": "Получатель — другой человек",
+  "recipientName": "Имя получателя",
+  "recipientPhone": "Телефон получателя",
+  "recipientPrivacy": "Телефон получателя виден только курьеру, который везёт заказ.",
+  "giftMessage": "Открытка с пожеланием",
+  "giftMessageHint": "Например: С днём рождения!",
+  "anonymousSender": "Отправить анонимно",
+  "anonymousSenderHint": "Получатель не увидит ваше имя. Данные заказа остаются у службы поддержки.",
+  "giftWrap": "Подарочная упаковка",
+  "giftWrapHint": "Красивая упаковка и открытка · +{price}",
+  "@giftWrapHint": {
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+  "deliveryInstructions": "Комментарий для курьера",
+  "orderSummary": "Ваш заказ",
+  "acceptTermsPrefix": "Я принимаю",
+  "termsOfService": "Условия использования",
+  "privacyPolicy": "Политика конфиденциальности",
+  "acceptTermsRequired": "Необходимо принять условия",
+  "checkoutFillRequired": "Заполните адрес, время доставки, получателя и примите условия.",
+  "proceedToPayment": "Перейти к оплате",
+  "proceedToPaymentWithTotal": "Перейти к оплате · {total}",
+  "@proceedToPaymentWithTotal": {
+    "placeholders": {
+      "total": {
+        "type": "String"
+      }
+    }
+  },
+  "newAddress": "Новый адрес",
+  "editAddress": "Редактировать адрес",
+  "city": "Город",
+  "street": "Улица",
+  "building": "Дом",
+  "apartment": "Квартира / офис",
+  "entrance": "Подъезд",
+  "floor": "Этаж",
+  "intercom": "Код домофона",
+  "addressLabel": "Название адреса",
+  "addressLabelHint": "Дом, Работа…",
+  "makeDefaultAddress": "Сделать основным",
+  "saveAddress": "Сохранить адрес",
+  "defaultLabel": "Основной",
+  "deliveryAddresses": "Адреса доставки",
+  "noAddresses": "Адресов пока нет",
+  "noAddressesHint": "Добавьте адрес, чтобы оформлять заказы в один клик.",
+  "payment": "Оплата",
+  "paymentMethod": "Способ оплаты",
+  "methodCard": "Банковская карта",
+  "payAmount": "Оплатить {amount}",
+  "@payAmount": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "payNow": "Оплатить заказ",
+  "payLater": "Оплатить позже",
+  "orderNumber": "Заказ {number}",
+  "@orderNumber": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "orderAwaitsPayment": "Ожидает оплаты",
+  "securePaymentNote": "Данные карты вводятся на защищённой странице платёжного провайдера. FEYA не хранит номера карт.",
+  "sandboxBanner": "Тестовый режим оплаты: деньги не списываются. Используется только для разработки.",
+  "simulateDecline": "Имитировать отказ (тест)",
+  "processingPayment": "Обрабатываем платёж…",
+  "waitingForPayment": "Ожидаем подтверждение оплаты",
+  "waitingForPaymentHint": "Завершите оплату на странице провайдера. Статус обновится автоматически.",
+  "checkStatus": "Проверить статус",
+  "paymentSuccessTitle": "Оплата прошла",
+  "paymentSuccessMessage": "Заказ {number} оплачен. Мы уже передали его флористу.",
+  "@paymentSuccessMessage": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "paymentFailedTitle": "Оплата не прошла",
+  "paymentFailedMessage": "Деньги не списаны. Попробуйте ещё раз или выберите другой способ оплаты.",
+  "paymentsUnavailable": "Онлайн-оплата недоступна",
+  "paymentsUnavailableHint": "Заказ сохранён. Мы свяжемся с вами или вы сможете оплатить его позже.",
+  "paymentMethods": "Способы оплаты",
+  "savedCardsTitle": "Сохранённые карты",
+  "savedCardsHint": "Управление картами появится после подключения платёжного провайдера. Данные карт хранит только провайдер.",
+  "order": "Заказ",
+  "activeOrders": "Активные",
+  "orderHistory": "История",
+  "noActiveOrders": "Нет активных заказов",
+  "noPastOrders": "История заказов пуста",
+  "signInToSeeOrders": "Войдите, чтобы видеть заказы",
+  "signInToSeeOrdersHint": "Здесь появятся ваши заказы и статус доставки.",
+  "orderStatus": "Статус заказа",
+  "orderItems": "Состав заказа",
+  "estimatedDelivery": "Ожидаемая доставка",
+  "paymentPaid": "Оплачено",
+  "paymentUnpaid": "Не оплачено",
+  "paymentFailedShort": "Платёж не прошёл",
+  "paymentRefunded": "Возврат выполнен",
+  "viewOrder": "Открыть заказ",
+  "trackOrder": "Отследить заказ",
+  "contactSupport": "Связаться с поддержкой",
+  "cancelOrder": "Отменить заказ",
+  "cancelOrderQuestion": "Отменить заказ?",
+  "cancelOrderHint": "Заказ будет отменён, а товары вернутся в наличие.",
+  "cancelPaidOrderHint": "Заказ будет отменён, а оплата возвращена.",
+  "orderCancelled": "Заказ отменён",
+  "leaveReviewHint": "Нажмите на букет, чтобы оставить отзыв.",
+  "statusCreated": "Создан",
+  "statusPendingPayment": "Ожидает оплаты",
+  "statusPaid": "Оплачен",
+  "statusConfirmed": "Подтверждён",
+  "statusPreparing": "Собирается",
+  "statusReady": "Готов к выдаче",
+  "statusCourierAssigned": "Курьер назначен",
+  "statusPickedUp": "Забран курьером",
+  "statusOnTheWay": "В пути",
+  "statusDelivered": "Доставлен",
+  "statusCancelled": "Отменён",
+  "statusPaymentFailed": "Оплата не прошла",
+  "statusRefunded": "Возврат средств",
+  "tracking": "Отслеживание",
+  "trackConfirmed": "Заказ принят",
+  "trackPreparing": "Флорист собирает букет",
+  "trackReady": "Букет готов, ждём курьера",
+  "trackCourierAssigned": "Курьер назначен",
+  "trackOnTheWay": "Курьер в пути",
+  "trackDelivered": "Заказ доставлен",
+  "yourCourier": "Ваш курьер",
+  "callCourier": "Позвонить курьеру",
+  "courierNotAssigned": "Курьер пока не назначен",
+  "liveLocationOn": "Курьер делится геопозицией",
+  "liveLocationUnavailable": "Геопозиция курьера недоступна",
+  "liveLocationUnavailableHint": "Мы покажем карту, как только курьер включит передачу местоположения. Статус заказа обновляется автоматически.",
+  "locationUpdated": "Обновлено в {time}",
+  "@locationUpdated": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "openInMaps": "Открыть на карте",
+  "loginTitle": "Вход в FEYA",
+  "loginSubtitle": "Введите номер телефона — мы отправим код подтверждения.",
+  "enterCode": "Введите код",
+  "codeSentTo": "Мы отправили код на {phone}",
+  "@codeSentTo": {
+    "placeholders": {
+      "phone": {
+        "type": "String"
+      }
+    }
+  },
+  "smsCode": "Код из SMS",
+  "getCode": "Получить код",
+  "signIn": "Войти",
+  "resendCode": "Отправить код ещё раз",
+  "resendIn": "Повторная отправка через {seconds} с",
+  "@resendIn": {
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "changeNumber": "Изменить номер",
+  "loginLegal": "Продолжая, вы соглашаетесь с условиями использования и политикой конфиденциальности.",
+  "devCodeHint": "Режим разработки: код подставлен автоматически.",
+  "signInTitle": "Войдите в аккаунт",
+  "signInProfileHint": "Сохраняйте адреса, следите за заказами и получайте уведомления.",
+  "guestName": "Гость FEYA",
+  "editProfile": "Редактировать профиль",
+  "phoneCannotChange": "Номер телефона используется для входа и не меняется",
+  "myOrders": "Мои заказы",
+  "favorites": "Избранное",
+  "noFavorites": "В избранном пусто",
+  "noFavoritesHint": "Нажмите на сердечко у букета, чтобы сохранить его.",
+  "notifications": "Уведомления",
+  "noNotifications": "Уведомлений пока нет",
+  "noNotificationsHint": "Здесь появятся новости о ваших заказах.",
+  "markAllRead": "Прочитать все",
+  "notifyOrderUpdates": "Статусы заказов",
+  "notifyPush": "Push-уведомления",
+  "notifyPromotions": "Акции и предложения",
+  "logout": "Выйти",
+  "deleteAccount": "Запросить удаление аккаунта",
+  "deleteAccountQuestion": "Удалить аккаунт?",
+  "deleteAccountHint": "Мы получим запрос на удаление ваших персональных данных. Вы выйдете из аккаунта на этом устройстве. Если войти снова, запрос будет отменён.",
+  "deleteAccountConfirm": "Запросить удаление",
+  "deletionRequested": "Запрос на удаление отправлен",
+  "helpAndSupport": "Помощь и поддержка",
+  "callSupport": "Позвонить в поддержку",
+  "faq": "Частые вопросы",
+  "faqDeliveryQ": "Как быстро вы доставляете?",
+  "faqDeliveryA": "Доступное время показывается при оформлении заказа: это либо срочная доставка, либо выбранный интервал. Фактические слоты зависят от зоны и загрузки.",
+  "faqPaymentQ": "Безопасна ли оплата?",
+  "faqPaymentA": "Данные карты вводятся на странице платёжного провайдера. FEYA не хранит номера карт и CVV, а заказ считается оплаченным только после подтверждения от провайдера.",
+  "faqCancelQ": "Можно ли отменить заказ?",
+  "faqCancelA": "Да, пока флорист не начал собирать букет. Оплаченный заказ возвращается тем же способом.",
+  "faqPhotoQ": "Букет будет как на фото?",
+  "faqPhotoA": "Флорист собирает букет по составу и размеру; отдельные цветы могут немного отличаться по оттенку в зависимости от сезона.",
+  "openFullDocument": "Открыть полную версию",
+  "legalDraftNotice": "Краткое изложение для разработки. Перед запуском замените его юридически проверенными документами.",
+  "privacyS1T": "Какие данные мы собираем",
+  "privacyS1B": "Номер телефона, имя, адреса доставки, данные получателей, историю заказов и технические данные устройства для уведомлений.",
+  "privacyS2T": "Платежи",
+  "privacyS2B": "Данные банковских карт обрабатывает платёжный провайдер. FEYA не хранит номера карт и CVV.",
+  "privacyS3T": "Ваши права",
+  "privacyS3B": "Вы можете изменить профиль, удалить адреса и запросить удаление аккаунта в настройках.",
+  "termsS1T": "Заказ и доставка",
+  "termsS1B": "Заказ принимается после подтверждения оплаты. Время доставки зависит от выбранного интервала и зоны.",
+  "termsS2T": "Отмена и возврат",
+  "termsS2B": "Заказ можно отменить до начала сборки. Возврат производится на способ оплаты.",
+  "termsS3T": "Цветы",
+  "termsS3B": "Состав может незначительно отличаться по сезону. Фото ориентировочные."
+}
