@@ -1,0 +1,95 @@
+spring:
+  application:
+    name: feya-backend
+  datasource:
+    url: ${FEYA_DB_URL:jdbc:postgresql://localhost:5432/feya}
+    username: ${FEYA_DB_USER:feya}
+    password: ${FEYA_DB_PASSWORD:}
+    hikari:
+      maximum-pool-size: ${FEYA_DB_POOL_SIZE:10}
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        jdbc:
+          time_zone: UTC
+          batch_size: 50
+        default_batch_fetch_size: 50
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+  jackson:
+    default-property-inclusion: non_null
+    serialization:
+      write-dates-as-timestamps: false
+    time-zone: UTC
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 6MB
+
+server:
+  port: ${PORT:8080}
+  forward-headers-strategy: framework
+  error:
+    include-message: never
+    include-stacktrace: never
+    include-binding-errors: never
+  shutdown: graceful
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      probes:
+        enabled: true
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    enabled: ${FEYA_SWAGGER_ENABLED:false}
+    path: /swagger-ui.html
+
+feya:
+  # dev | production. In production, startup fails if dev-only switches are enabled (see ProductionGuard).
+  env: ${FEYA_ENV:production}
+  timezone: Asia/Almaty
+  currency: KZT
+  jwt:
+    secret: ${FEYA_JWT_SECRET:}
+    issuer: feya
+    access-ttl: PT15M
+    refresh-ttl: P30D
+  auth:
+    dev-otp-enabled: ${FEYA_DEV_OTP_ENABLED:false}
+    otp-ttl: PT5M
+    otp-length: 6
+    otp-max-attempts: 5
+    otp-max-per-phone-per-10min: 5
+  payments:
+    # none | sandbox | <real provider id>. 'sandbox' is rejected in production by ProductionGuard.
+    provider: ${FEYA_PAYMENTS_PROVIDER:none}
+    webhook-secret: ${FEYA_PAYMENTS_WEBHOOK_SECRET:}
+    methods: CARD,APPLE_PAY,GOOGLE_PAY
+  cors:
+    allowed-origins: ${FEYA_CORS_ALLOWED_ORIGINS:}
+    allowed-origin-patterns: ${FEYA_CORS_ALLOWED_ORIGIN_PATTERNS:}
+  media:
+    base-url: ${FEYA_MEDIA_BASE_URL:}
+  orders:
+    pending-payment-ttl: PT30M
+    max-quantity-per-line: 20
+    gift-wrap-fee: 1500
+  tracking:
+    location-ttl: PT5M
+  rate-limit:
+    enabled: ${FEYA_RATE_LIMIT_ENABLED:true}
+  push:
+    # logging | fcm (fcm requires credentials, see docs/INTEGRATIONS.md)
+    provider: ${FEYA_PUSH_PROVIDER:logging}
