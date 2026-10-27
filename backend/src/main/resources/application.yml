@@ -2,7 +2,7 @@ spring:
   application:
     name: feya-backend
   datasource:
-    url: ${FEYA_DB_URL:jdbc:postgresql://localhost:5432/feya}
+    url: ${FEYA_DB_URL:jdbc:postgresql://${FEYA_DB_HOST:localhost}:${FEYA_DB_PORT:5432}/${FEYA_DB_NAME:feya}}
     username: ${FEYA_DB_USER:feya}
     password: ${FEYA_DB_PASSWORD:}
     hikari:
