@@ -150,11 +150,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       enabled: !_codeSent && !_busy,
                       keyboardType: TextInputType.phone,
                       autofillHints: const [AutofillHints.telephoneNumber],
-                      inputFormatters: [
-                        FilteringTextInputFormatter.allow(
-                          RegExp(r'[0-9+\-() ]'),
-                        ),
-                      ],
+                      inputFormatters: [_KzPhoneFormatter()],
                       decoration: InputDecoration(
                         labelText: l.phone,
                         prefixIcon: const Icon(Icons.phone_outlined),
@@ -245,6 +241,31 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
           ),
         ),
       ),
+    );
+  }
+}
+
+/// Formats input as `+7 701 234 56 78` (Kazakhstan / Russia numbering); a leading 8 is treated as +7.
+class _KzPhoneFormatter extends TextInputFormatter {
+  @override
+  TextEditingValue formatEditUpdate(
+    TextEditingValue oldValue,
+    TextEditingValue newValue,
+  ) {
+    var d = newValue.text.replaceAll(RegExp(r'[^0-9]'), '');
+    if (d.startsWith('8')) d = '7${d.substring(1)}';
+    if (!d.startsWith('7')) d = '7$d';
+    if (d.length > 11) d = d.substring(0, 11);
+    final r = d.substring(1);
+    final b = StringBuffer('+7 ');
+    for (var i = 0; i < r.length; i++) {
+      if (i == 3 || i == 6 || i == 8) b.write(' ');
+      b.write(r[i]);
+    }
+    final text = b.toString();
+    return TextEditingValue(
+      text: text,
+      selection: TextSelection.collapsed(offset: text.length),
     );
   }
 }

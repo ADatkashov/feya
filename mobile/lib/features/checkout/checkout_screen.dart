@@ -438,7 +438,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
               ),
             ),
           ),
-          Row(
+          Wrap(
             children: [
               TextButton(
                 onPressed: () => context.push('/legal/terms'),
@@ -468,15 +468,24 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                 ),
               ),
             ),
-          const SizedBox(height: 8),
-          FeyaButton(
+        ],
+      ),
+      bottomNavigationBar: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(
+            FeyaSpace.page,
+            8,
+            FeyaSpace.page,
+            12,
+          ),
+          child: FeyaButton(
             label: quote.value == null
                 ? l.proceedToPayment
                 : l.proceedToPaymentWithTotal(formatMoney(quote.value!.total)),
             loading: _submitting,
             onPressed: () => _submit(quote.value),
           ),
-        ],
+        ),
       ),
     );
   }

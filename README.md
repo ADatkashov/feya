@@ -7,6 +7,22 @@ Spring Boot + PostgreSQL, веб-консоль для флористов/под
 > Репозиторий создан с нуля. Что реализовано и что нет — честно перечислено в разделе
 > [«Статус и ограничения»](#статус-и-ограничения).
 
+## Скриншоты
+
+Клиентское приложение (тёмная тема, dev-сид с вымышленными данными).
+
+| Главная | Каталог | Товар | Корзина |
+|:-:|:-:|:-:|:-:|
+| <img src="docs/screenshots/01-home.png" width="180"> | <img src="docs/screenshots/02-catalog.png" width="180"> | <img src="docs/screenshots/03-product.png" width="180"> | <img src="docs/screenshots/05-cart.png" width="180"> |
+
+| Вход (OTP) | Оформление | Оплата | Детали заказа |
+|:-:|:-:|:-:|:-:|
+| <img src="docs/screenshots/08-otp.png" width="180"> | <img src="docs/screenshots/10-checkout-bottom.png" width="180"> | <img src="docs/screenshots/11-payment.png" width="180"> | <img src="docs/screenshots/14-order-detail.png" width="180"> |
+
+| Трекинг | Профиль | Уведомления | Настройки |
+|:-:|:-:|:-:|:-:|
+| <img src="docs/screenshots/15-tracking.png" width="180"> | <img src="docs/screenshots/16-profile.png" width="180"> | <img src="docs/screenshots/21-notifications.png" width="180"> | <img src="docs/screenshots/23-settings.png" width="180"> |
+
 ## Состав
 
 | Каталог | Что внутри |
