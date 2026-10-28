@@ -211,7 +211,7 @@ class _CartLineTile extends ConsumerWidget {
             child: NetImage(
               quoteLine?.imageUrl ?? line.imageUrl,
               radius: BorderRadius.circular(FeyaRadius.sm),
-              semanticLabel: line.productName,
+              semanticLabel: quoteLine?.productName ?? line.productName,
             ),
           ),
           const SizedBox(width: 12),
@@ -220,13 +220,16 @@ class _CartLineTile extends ConsumerWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  line.productName,
+                  quoteLine?.productName ?? line.productName,
                   style: t.titleSmall,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
                 const SizedBox(height: 2),
-                Text(line.variantLabel, style: t.bodySmall),
+                Text(
+                  quoteLine?.variantLabel ?? line.variantLabel,
+                  style: t.bodySmall,
+                ),
                 const SizedBox(height: 6),
                 Text(
                   formatMoney(price * line.quantity),

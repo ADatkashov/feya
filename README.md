@@ -23,6 +23,20 @@ Spring Boot + PostgreSQL, веб-консоль для флористов/под
 |:-:|:-:|:-:|:-:|
 | <img src="docs/screenshots/15-tracking.png" width="180"> | <img src="docs/screenshots/16-profile.png" width="180"> | <img src="docs/screenshots/21-notifications.png" width="180"> | <img src="docs/screenshots/23-settings.png" width="180"> |
 
+Языки: қазақша (верхний ряд) и English (нижний ряд).
+
+| Главная (kk) | Товар (kk) | Профиль (kk) |
+|:-:|:-:|:-:|
+| <img src="docs/screenshots/kk-1-home.png" width="180"> | <img src="docs/screenshots/kk-3-product.png" width="180"> | <img src="docs/screenshots/kk-5-profile.png" width="180"> |
+| <img src="docs/screenshots/en-1-home.png" width="180"> | <img src="docs/screenshots/en-3-product.png" width="180"> | <img src="docs/screenshots/en-4-cart.png" width="180"> |
+
+Веб-консоль персонала (`/admin/`): сводка, заказы, очередь флориста, товары.
+
+| | |
+|:-:|:-:|
+| <img src="docs/screenshots/admin-dashboard.png" width="360"> | <img src="docs/screenshots/admin-orders.png" width="360"> |
+| <img src="docs/screenshots/admin-floristOrders.png" width="360"> | <img src="docs/screenshots/admin-products.png" width="360"> |
+
 ## Состав
 
 | Каталог | Что внутри |
