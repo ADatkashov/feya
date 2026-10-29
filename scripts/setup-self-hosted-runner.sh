@@ -10,7 +10,9 @@
 set -euo pipefail
 
 REPO="${REPO:-adatkashov/feya}"
-RUNNER_DIR="${RUNNER_DIR:-$HOME/actions-runner}"
+# One directory per repository: a runner is bound to a single repo, so a runner already set up for another
+# project (e.g. ~/actions-runner) must not be reused.
+RUNNER_DIR="${RUNNER_DIR:-$HOME/actions-runner-$(basename "$REPO")}"
 LABELS="${LABELS:-self-hosted,linux,x64}"
 TOKEN="${1:-}"
 
@@ -41,7 +43,7 @@ if [ -d /run/systemd/system ]; then
   sudo ./svc.sh start
 else
   # WSL without systemd: no service, run it in a terminal that stays open.
-  echo "No systemd (WSL?). Start the runner by hand: cd $RUNNER_DIR && ./run.sh"
+  echo "No systemd (WSL?). Start the runner by hand: cd \"$RUNNER_DIR\" && ./run.sh"
 fi
 echo "Runner installed. Now set the repo variable CI_RUNS_ON to [\"self-hosted\",\"linux\"]"
 echo "(Settings -> Secrets and variables -> Actions -> Variables)."
