@@ -44,7 +44,7 @@ Spring Boot + PostgreSQL, веб-консоль для флористов/под
 | [`backend/`](backend) | Spring Boot 3.5 · Java 21 · Gradle · Spring Security (JWT) · JPA · Flyway · OpenAPI. Модульный монолит |
 | [`mobile/`](mobile) | Flutter 3.47 (Android / iOS / Web) · Riverpod · GoRouter · Dio · ru/kk/en |
 | [`backend/src/main/resources/static/admin`](backend/src/main/resources/static/admin) | Веб-консоль персонала (`/admin/`), без сборки |
-| [`docs/`](docs) | [Архитектура](docs/ARCHITECTURE.md) · [API](docs/API.md) · [Разработка](docs/DEVELOPMENT.md) · [Развёртывание](docs/DEPLOYMENT.md) · [Интеграции](docs/INTEGRATIONS.md) · [`openapi.json`](docs/openapi.json) |
+| [`docs/`](docs) | [Архитектура](docs/ARCHITECTURE.md) · [API](docs/API.md) · [Разработка](docs/DEVELOPMENT.md) · [Развёртывание](docs/DEPLOYMENT.md) · [Интеграции](docs/INTEGRATIONS.md) · [CI и self-hosted раннер](docs/CI.md) · [`openapi.json`](docs/openapi.json) |
 | [`tools/`](tools) | Генераторы: сид-данные, иллюстрации каталога, строки интерфейса, экспорт OpenAPI |
 
 ## Быстрый старт
