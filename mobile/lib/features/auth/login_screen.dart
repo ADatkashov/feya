@@ -253,6 +253,10 @@ class _KzPhoneFormatter extends TextInputFormatter {
     TextEditingValue newValue,
   ) {
     var d = newValue.text.replaceAll(RegExp(r'[^0-9]'), '');
+    // A pasted 10-digit local number (e.g. 701 234 56 78) has no country code; typing char by char keeps the
+    // field's own "+7 " prefix, so only a bulk change can be a bare local number.
+    final bulk = (newValue.text.length - oldValue.text.length).abs() > 1;
+    if (bulk && d.length == 10) d = '7$d';
     if (d.startsWith('8')) d = '7${d.substring(1)}';
     if (!d.startsWith('7')) d = '7$d';
     if (d.length > 11) d = d.substring(0, 11);
