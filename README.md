@@ -23,6 +23,20 @@ Spring Boot + PostgreSQL, веб-консоль для флористов/под
 |:-:|:-:|:-:|:-:|
 | <img src="docs/screenshots/15-tracking.png" width="180"> | <img src="docs/screenshots/16-profile.png" width="180"> | <img src="docs/screenshots/21-notifications.png" width="180"> | <img src="docs/screenshots/23-settings.png" width="180"> |
 
+Языки: қазақша (верхний ряд) и English (нижний ряд).
+
+| Главная (kk) | Товар (kk) | Профиль (kk) |
+|:-:|:-:|:-:|
+| <img src="docs/screenshots/kk-1-home.png" width="180"> | <img src="docs/screenshots/kk-3-product.png" width="180"> | <img src="docs/screenshots/kk-5-profile.png" width="180"> |
+| <img src="docs/screenshots/en-1-home.png" width="180"> | <img src="docs/screenshots/en-3-product.png" width="180"> | <img src="docs/screenshots/en-4-cart.png" width="180"> |
+
+Веб-консоль персонала (`/admin/`): сводка, заказы, очередь флориста, товары.
+
+| | |
+|:-:|:-:|
+| <img src="docs/screenshots/admin-dashboard.png" width="360"> | <img src="docs/screenshots/admin-orders.png" width="360"> |
+| <img src="docs/screenshots/admin-floristOrders.png" width="360"> | <img src="docs/screenshots/admin-products.png" width="360"> |
+
 ## Состав
 
 | Каталог | Что внутри |
@@ -30,7 +44,7 @@ Spring Boot + PostgreSQL, веб-консоль для флористов/под
 | [`backend/`](backend) | Spring Boot 3.5 · Java 21 · Gradle · Spring Security (JWT) · JPA · Flyway · OpenAPI. Модульный монолит |
 | [`mobile/`](mobile) | Flutter 3.47 (Android / iOS / Web) · Riverpod · GoRouter · Dio · ru/kk/en |
 | [`backend/src/main/resources/static/admin`](backend/src/main/resources/static/admin) | Веб-консоль персонала (`/admin/`), без сборки |
-| [`docs/`](docs) | [Архитектура](docs/ARCHITECTURE.md) · [API](docs/API.md) · [Разработка](docs/DEVELOPMENT.md) · [Развёртывание](docs/DEPLOYMENT.md) · [Интеграции](docs/INTEGRATIONS.md) · [`openapi.json`](docs/openapi.json) |
+| [`docs/`](docs) | [Архитектура](docs/ARCHITECTURE.md) · [API](docs/API.md) · [Разработка](docs/DEVELOPMENT.md) · [Развёртывание](docs/DEPLOYMENT.md) · [Интеграции](docs/INTEGRATIONS.md) · [CI и self-hosted раннер](docs/CI.md) · [`openapi.json`](docs/openapi.json) |
 | [`tools/`](tools) | Генераторы: сид-данные, иллюстрации каталога, строки интерфейса, экспорт OpenAPI |
 
 ## Быстрый старт

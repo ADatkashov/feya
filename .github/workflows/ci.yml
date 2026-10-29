@@ -12,7 +12,11 @@ concurrency:
 jobs:
   backend:
     name: Backend (tests + build)
-    runs-on: ubuntu-latest
+    # Repo variable CI_RUNS_ON switches to a self-hosted runner, e.g. ["self-hosted","linux"]
+    # (docs/CI.md "Self-hosted runner"); unset = GitHub-hosted.
+    runs-on: ${{ fromJSON(vars.CI_RUNS_ON || '"ubuntu-latest"') }}
+    # Never run fork code on a self-hosted runner.
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
     services:
       postgres:
         image: postgres:16-alpine
@@ -20,14 +24,10 @@ jobs:
           POSTGRES_DB: feya_test
           POSTGRES_USER: feya
           POSTGRES_PASSWORD: feya
-        ports: ["5432:5432"]
+        ports: ["5432"]  # random host port: a persistent runner may already use 5432
         options: >-
           --health-cmd "pg_isready -U feya -d feya_test"
           --health-interval 5s --health-timeout 3s --health-retries 10
-    env:
-      FEYA_TEST_DB_URL: jdbc:postgresql://localhost:5432/feya_test
-      FEYA_TEST_DB_USER: feya
-      FEYA_TEST_DB_PASSWORD: feya
     defaults:
       run:
         working-directory: backend
@@ -37,8 +37,13 @@ jobs:
         with:
           distribution: temurin
           java-version: "21"
-          cache: gradle
+          # Self-hosted runners keep ~/.gradle on disk; skip the cloud cache (Actions storage quota).
+          cache: ${{ vars.CI_RUNS_ON == '' && 'gradle' || '' }}
       - name: Test
+        env:
+          FEYA_TEST_DB_URL: jdbc:postgresql://localhost:${{ job.services.postgres.ports['5432'] }}/feya_test
+          FEYA_TEST_DB_USER: feya
+          FEYA_TEST_DB_PASSWORD: feya
         run: ./gradlew test --no-daemon
       - name: Build jar
         run: ./gradlew bootJar --no-daemon -x test
@@ -48,10 +53,15 @@ jobs:
         with:
           name: backend-test-report
           path: backend/build/reports/tests/test
+          retention-days: 3
 
   mobile:
     name: Mobile (analyze + test + web build)
-    runs-on: ubuntu-latest
+    # Repo variable CI_RUNS_ON switches to a self-hosted runner, e.g. ["self-hosted","linux"]
+    # (docs/CI.md "Self-hosted runner"); unset = GitHub-hosted.
+    runs-on: ${{ fromJSON(vars.CI_RUNS_ON || '"ubuntu-latest"') }}
+    # Never run fork code on a self-hosted runner.
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
     defaults:
       run:
         working-directory: mobile
@@ -61,7 +71,8 @@ jobs:
         with:
           flutter-version: "3.47.8"
           channel: stable
-          cache: true
+          # Self-hosted runners keep the SDK on disk; skip the cloud cache (Actions storage quota).
+          cache: ${{ vars.CI_RUNS_ON == '' }}
       - run: flutter pub get
       - name: Format check
         run: dart format --output=none --set-exit-if-changed lib test
@@ -74,19 +85,28 @@ jobs:
 
   docker:
     name: Docker image + compose config
-    runs-on: ubuntu-latest
+    # Repo variable CI_RUNS_ON switches to a self-hosted runner, e.g. ["self-hosted","linux"]
+    # (docs/CI.md "Self-hosted runner"); unset = GitHub-hosted.
+    runs-on: ${{ fromJSON(vars.CI_RUNS_ON || '"ubuntu-latest"') }}
+    # Never run fork code on a self-hosted runner.
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
     steps:
       - uses: actions/checkout@v4
       - name: Validate compose file
         run: |
           cp .env.example .env
           docker compose config -q
+          rm -f .env
       - name: Build backend image
         run: docker build -t feya-backend:ci backend
 
   secrets-scan:
     name: No committed secrets
-    runs-on: ubuntu-latest
+    # Repo variable CI_RUNS_ON switches to a self-hosted runner, e.g. ["self-hosted","linux"]
+    # (docs/CI.md "Self-hosted runner"); unset = GitHub-hosted.
+    runs-on: ${{ fromJSON(vars.CI_RUNS_ON || '"ubuntu-latest"') }}
+    # Never run fork code on a self-hosted runner.
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
     steps:
       - uses: actions/checkout@v4
       - name: Look for private keys and env files
