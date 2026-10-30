@@ -159,6 +159,7 @@ public class PaymentService {
                 payment.setFailureReason(ev.failureReason());
                 markOrderFailed(order);
             }
+            case PAYMENT_PENDING -> { }
             case REFUND_SUCCEEDED -> refunds.findFirstByPaymentIdAndStatus(payment.getId(), Refund.Status.REQUESTED)
                     .ifPresent(r -> completeRefund(payment, order, r));
             case REFUND_FAILED -> refunds.findFirstByPaymentIdAndStatus(payment.getId(), Refund.Status.REQUESTED)

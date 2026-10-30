@@ -30,8 +30,14 @@ void main() {
       final sub = repo
           .watchTracking('o1', poll: const Duration(milliseconds: 40))
           .listen((t) => events.add(t.status));
-      await Future<void>.delayed(const Duration(milliseconds: 200));
+      // Wait for the second poll instead of a fixed pause: a loaded CI runner can be slower than any constant.
+      final deadline = DateTime.now().add(const Duration(seconds: 10));
+      while (!events.contains('ON_THE_WAY') &&
+          DateTime.now().isBefore(deadline)) {
+        await Future<void>.delayed(const Duration(milliseconds: 20));
+      }
       await sub.cancel();
+      expect(events, isNotEmpty);
       expect(events.first, 'PICKED_UP');
       expect(events, contains('ON_THE_WAY'));
     },

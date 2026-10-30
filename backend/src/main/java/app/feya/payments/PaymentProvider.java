@@ -22,12 +22,21 @@ public interface PaymentProvider {
     /** Parses a verified webhook body. */
     ProviderEvent parseEvent(String rawBody);
 
+    /**
+     * Body of the HTTP 200 answer to a verified webhook, for gateways that require a specific acknowledgement
+     * (FreedomPay expects XML). {@code null} means an empty 200.
+     */
+    default String webhookAck() {
+        return null;
+    }
+
     /** Requests a (full or partial) refund. */
     RefundOutcome refund(Payment payment, BigDecimal amount, String reason);
 
     record Session(String providerPaymentId, String checkoutUrl) {}
 
-    enum EventType { PAYMENT_SUCCEEDED, PAYMENT_FAILED, REFUND_SUCCEEDED, REFUND_FAILED }
+    /** {@code PAYMENT_PENDING}: the gateway reports an unfinished payment; recorded for audit, changes nothing. */
+    enum EventType { PAYMENT_SUCCEEDED, PAYMENT_FAILED, PAYMENT_PENDING, REFUND_SUCCEEDED, REFUND_FAILED }
 
     record ProviderEvent(String eventId, EventType type, String providerPaymentId, BigDecimal amount, String currency,
                          String failureReason) {}
