@@ -2,12 +2,17 @@ package app.feya.payments;
 
 import app.feya.common.ApiException;
 import app.feya.security.Auth;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
+import java.io.IOException;
 import java.math.BigDecimal;
+import java.nio.charset.StandardCharsets;
 import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,6 +24,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/v1")
 public class PaymentController {
+    private static final int MAX_WEBHOOK_BYTES = 64_000;
+
     public record StartPaymentRequest(@NotBlank String method) {}
 
     public record PaymentDto(UUID id, UUID orderId, String provider, String method, Payment.Status status,
@@ -59,11 +66,20 @@ public class PaymentController {
     }
 
     @PostMapping("/payments/webhook/{provider}")
-    public void webhook(@PathVariable String provider, @RequestBody String rawBody,
-                        @RequestHeader(value = "X-Webhook-Signature", required = false) String signature) {
-        if (rawBody == null || rawBody.length() > 64_000) {
+    public ResponseEntity<String> webhook(@PathVariable String provider, HttpServletRequest request,
+                                          @RequestHeader(value = "X-Webhook-Signature", required = false) String signature)
+            throws IOException {
+        // Read the stream itself: for form posts Spring would rebuild the body from parameters (re-encoded), and a
+        // signature must be checked over exactly the bytes the gateway sent.
+        byte[] bytes = request.getInputStream().readNBytes(MAX_WEBHOOK_BYTES + 1);
+        if (bytes.length == 0 || bytes.length > MAX_WEBHOOK_BYTES) {
             throw ApiException.badRequest("INVALID_WEBHOOK", "Invalid payload");
         }
+        String rawBody = new String(bytes, StandardCharsets.UTF_8);
         payments.handleWebhook(provider, rawBody, signature);
+        // Some gateways (FreedomPay) require a specific acknowledgement body; others accept an empty 200.
+        String ack = providers.byId(provider).map(PaymentProvider::webhookAck).orElse(null);
+        return ack == null ? ResponseEntity.ok().build()
+                : ResponseEntity.ok().contentType(MediaType.APPLICATION_XML).body(ack);
     }
 }

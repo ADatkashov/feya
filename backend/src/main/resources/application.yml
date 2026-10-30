@@ -77,6 +77,23 @@ feya:
     provider: ${FEYA_PAYMENTS_PROVIDER:none}
     webhook-secret: ${FEYA_PAYMENTS_WEBHOOK_SECRET:}
     methods: CARD,APPLE_PAY,GOOGLE_PAY
+    # Used only with provider=freedompay (hosted checkout, signed Result-notify webhook). No default host on purpose.
+    freedompay:
+      api-url: ${FEYA_FREEDOMPAY_API_URL:}
+      merchant-id: ${FEYA_FREEDOMPAY_MERCHANT_ID:}
+      secret-key: ${FEYA_FREEDOMPAY_SECRET_KEY:}
+      # The script name FreedomPay signs the Result-notify callback with: confirm it in the merchant panel.
+      result-notify-script-name: ${FEYA_FREEDOMPAY_RESULT_NOTIFY_SCRIPT_NAME:result.php}
+      success-url: ${FEYA_FREEDOMPAY_SUCCESS_URL:}
+      failure-url: ${FEYA_FREEDOMPAY_FAILURE_URL:}
+  sms:
+    # logging (delivers nothing) | twilio
+    provider: ${FEYA_SMS_PROVIDER:logging}
+    twilio:
+      account-sid: ${FEYA_SMS_TWILIO_ACCOUNT_SID:}
+      auth-token: ${FEYA_SMS_TWILIO_AUTH_TOKEN:}
+      from: ${FEYA_SMS_TWILIO_FROM:}
+      messaging-service-sid: ${FEYA_SMS_TWILIO_MESSAGING_SERVICE_SID:}
   cors:
     allowed-origins: ${FEYA_CORS_ALLOWED_ORIGINS:}
     allowed-origin-patterns: ${FEYA_CORS_ALLOWED_ORIGIN_PATTERNS:}

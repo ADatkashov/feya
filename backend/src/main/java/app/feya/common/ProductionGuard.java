@@ -31,7 +31,8 @@ public class ProductionGuard {
             if (secret.startsWith("dev-only")) {
                 throw new IllegalStateException("A development JWT secret is configured in production");
             }
-            if (props.payments().configured()
+            // FreedomPay has no separate webhook secret: its one secret key signs and verifies (checked by the provider).
+            if (props.payments().configured() && !"freedompay".equalsIgnoreCase(props.payments().provider())
                     && (props.payments().webhookSecret() == null || props.payments().webhookSecret().isBlank())) {
                 throw new IllegalStateException("FEYA_PAYMENTS_WEBHOOK_SECRET is required when a payment provider is configured");
             }
