@@ -7,8 +7,12 @@ class AppConfig {
   /// Backend origin without the `/api/v1` suffix.
   static const String _apiBase = String.fromEnvironment('API_BASE_URL');
 
+  /// Demo backend used by release builds when `API_BASE_URL` is not given, so a plainly built APK works on a phone.
+  static const String demoApiBase = 'https://feya-backend-sea8.onrender.com';
+
   static String get apiBaseUrl {
     if (_apiBase.isNotEmpty) return _apiBase.replaceAll(RegExp(r'/+$'), '');
+    if (kReleaseMode) return demoApiBase;
     if (kIsWeb) return 'http://localhost:8080';
     if (defaultTargetPlatform == TargetPlatform.android)
       return 'http://10.0.2.2:8080';
