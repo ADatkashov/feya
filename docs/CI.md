@@ -36,3 +36,16 @@ WSL integration для Ubuntu; опционально включить `systemd=
 - Джобы пропускаются для PR из форков (`head.repo.full_name != github.repository`): код чужих форков не должен
   выполняться на вашей машине. Не добавляйте триггеры `pull_request_target` и не включайте раннер для публичных форков.
 - Если машина выключена, джоб ждёт в очереди.
+
+## Android APK для телефона
+
+*Actions → Android APK → Run workflow* (адрес бэкенда можно изменить в поле) → когда прогон завершится, откройте его и скачайте
+артефакт `feya-apk` (внутри `app-release.apk`; GitHub отдаёт его zip-архивом, требуется вход в GitHub). Скопируйте APK на
+телефон и установите (разрешите установку из неизвестных источников). Сборка идёт на вашем self-hosted раннере и требует Android SDK
+(по умолчанию ищется `ANDROID_HOME` или `~/Android/Sdk`; лицензии принять один раз: `flutter doctor --android-licenses`).
+
+Без параметров release-сборка смотрит на демо-бэкенд `https://feya-backend-sea8.onrender.com` (`AppConfig.demoApiBase`),
+debug-сборка — на `http://10.0.2.2:8080` (эмулятор). APK подписан debug-ключом: годится для установки вручную, но не для Google Play.
+Первый запрос после простоя может идти 2–3 минуты (бесплатный тариф Render засыпает).
+
+Локально то же самое: `cd mobile && flutter build apk --release --dart-define=API_BASE_URL=https://feya-backend-sea8.onrender.com`.
