@@ -1,25 +1,38 @@
 name: Android APK
 
-# Builds an installable release APK pointing at the demo backend and attaches it to the run (Actions -> Android APK ->
-# Run workflow -> open the run -> Artifacts) and to a DRAFT release (Releases -> "Android APK #<run>"; drafts are visible
-# only to people with write access and do not use the Actions artifact storage quota, which can be exhausted).
-# By hand only, so nothing from forks ever reaches the runner.
-# Needs the Android SDK on the runner (docs/CI.md "Android APK"). Signed with the debug key: fine for sideloading,
-# not for Google Play.
+# CD for the Android app. Runs on every push to main that touches the mobile app, and by hand
+# (Actions -> Android APK -> Run workflow, the backend URL can be changed there).
+# Result: a Release "Android APK #<run>" with a permanent download link (open it on the phone and tap the .apk),
+# plus the same file as a run artifact (14 days).
+# Signing: with the secrets ANDROID_KEYSTORE_BASE64, ANDROID_KEYSTORE_PASSWORD, ANDROID_KEY_ALIAS and
+# ANDROID_KEY_PASSWORD set (docs/CI.md "Android APK") the APK is release-signed; without them it is debug-signed
+# (fine for sideloading, not for Google Play). Nothing is deployed anywhere.
 on:
+  push:
+    branches: [main]
+    paths:
+      - "mobile/**"
+      - ".github/workflows/android-apk.yml"
   workflow_dispatch:
     inputs:
       api_base_url:
         description: Backend origin baked into the app (no trailing slash)
         default: https://feya-backend-sea8.onrender.com
 
+concurrency:
+  group: android-apk-${{ github.ref }}
+  cancel-in-progress: true
+
 permissions:
-  contents: write  # draft release with the APK
+  contents: write  # the release with the APK
+
+env:
+  API_BASE_URL: ${{ inputs.api_base_url || 'https://feya-backend-sea8.onrender.com' }}
 
 jobs:
   apk:
     name: Build APK
-    runs-on: ${{ fromJSON(vars.CI_RUNS_ON || '"ubuntu-latest"') }}
+    runs-on: ubuntu-latest
     timeout-minutes: 60
     defaults:
       run:
@@ -34,29 +47,52 @@ jobs:
         with:
           flutter-version: "3.47.8"
           channel: stable
-          cache: ${{ vars.CI_RUNS_ON == '' }}
-      - name: Locate the Android SDK
-        run: |
-          if [ -z "${ANDROID_HOME:-}" ] && [ -d "$HOME/Android/Sdk" ]; then
-            echo "ANDROID_HOME=$HOME/Android/Sdk" >> "$GITHUB_ENV"
-          fi
+          cache: true
       - run: flutter pub get
+      - name: Release signing (only when the secrets exist)
+        id: signing
+        env:
+          KEYSTORE_B64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          STORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+        run: |
+          if [ -z "$KEYSTORE_B64" ] || [ -z "$STORE_PASSWORD" ] || [ -z "$KEY_ALIAS" ] || [ -z "$KEY_PASSWORD" ]; then
+            echo "kind=debug-signed" >> "$GITHUB_OUTPUT"
+            echo "No signing secrets: building a debug-signed APK."
+            exit 0
+          fi
+          mkdir -p "$RUNNER_TEMP/keystore"
+          echo "$KEYSTORE_B64" | base64 -d > "$RUNNER_TEMP/keystore/release.jks"
+          cat > android/key.properties <<PROPS
+          storeFile=$RUNNER_TEMP/keystore/release.jks
+          storePassword=$STORE_PASSWORD
+          keyAlias=$KEY_ALIAS
+          keyPassword=$KEY_PASSWORD
+          PROPS
+          echo "kind=release-signed" >> "$GITHUB_OUTPUT"
       - name: Build release APK
-        run: flutter build apk --release --dart-define=API_BASE_URL=${{ inputs.api_base_url }}
-      - name: Attach the APK to a draft release
+        run: flutter build apk --release --dart-define=API_BASE_URL=$API_BASE_URL
+      - name: Name the APK
+        run: cp build/app/outputs/flutter-apk/app-release.apk "feya-${{ steps.signing.outputs.kind }}-${{ github.run_number }}.apk"
+      - name: Publish the release
         uses: softprops/action-gh-release@v2
         with:
-          draft: true
           prerelease: true
           tag_name: apk-${{ github.run_number }}
           target_commitish: ${{ github.sha }}
           name: Android APK #${{ github.run_number }}
-          body: Debug-signed release APK for sideloading (demo backend ${{ inputs.api_base_url }}), built from ${{ github.sha }}.
-          files: mobile/build/app/outputs/flutter-apk/app-release.apk
-      # Best effort: fails when the Actions artifact storage quota is exhausted, which must not fail the build.
+          body: |
+            ${{ steps.signing.outputs.kind }} APK built from ${{ github.sha }}. Backend baked in: ${{ env.API_BASE_URL }}.
+            Install: open this page on the phone, tap the .apk, allow "install unknown apps". A phone with a build signed by
+            another key must uninstall the app first.
+          files: mobile/feya-${{ steps.signing.outputs.kind }}-${{ github.run_number }}.apk
       - uses: actions/upload-artifact@v4
         continue-on-error: true
         with:
           name: feya-apk
-          path: mobile/build/app/outputs/flutter-apk/app-release.apk
-          retention-days: 7
+          path: mobile/feya-*.apk
+          retention-days: 14
+      - name: Remove the keystore
+        if: always()
+        run: rm -rf android/key.properties "$RUNNER_TEMP/keystore"
