@@ -39,8 +39,9 @@ WSL integration для Ubuntu; опционально включить `systemd=
 
 ## Android APK для телефона
 
-*Actions → Android APK → Run workflow* (адрес бэкенда можно изменить в поле) → когда прогон завершится, откройте его и скачайте
-артефакт `feya-apk` (внутри `app-release.apk`; GitHub отдаёт его zip-архивом, требуется вход в GitHub). Скопируйте APK на
+*Actions → Android APK → Run workflow* (адрес бэкенда можно изменить в поле) → когда прогон завершится, возьмите APK из черновика релиза
+*Releases → Android APK #N* (виден только тем, у кого есть право записи; квоту Actions не расходует) или из артефакта `feya-apk`
+(zip-архив с `app-release.apk`; загрузка артефакта best effort — при исчерпанной квоте хранилища Actions она тихо пропускается). Скопируйте APK на
 телефон и установите (разрешите установку из неизвестных источников). Сборка идёт на вашем self-hosted раннере и требует Android SDK
 (по умолчанию ищется `ANDROID_HOME` или `~/Android/Sdk`; лицензии принять один раз: `flutter doctor --android-licenses`).
 
