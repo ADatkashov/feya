@@ -15,6 +15,7 @@ import org.springframework.security.oauth2.jose.jws.MacAlgorithm;
 import org.springframework.security.oauth2.jwt.JwsHeader;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
+import org.springframework.security.oauth2.jwt.JwtTimestampValidator;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
@@ -37,7 +38,12 @@ public class JwtService {
     }
 
     public JwtDecoder decoder() {
-        return NimbusJwtDecoder.withSecretKey(key).macAlgorithm(MacAlgorithm.HS256).build();
+        NimbusJwtDecoder decoder = NimbusJwtDecoder.withSecretKey(key).macAlgorithm(MacAlgorithm.HS256).build();
+        // Validate exp/nbf against the same Clock that issues tokens (the system clock in prod, a fixed one in tests).
+        JwtTimestampValidator timestamps = new JwtTimestampValidator();
+        timestamps.setClock(clock);
+        decoder.setJwtValidator(timestamps);
+        return decoder;
     }
 
     public String issueAccessToken(UUID userId, Set<Role> roles) {
