@@ -54,8 +54,8 @@ class DeliveryIT extends IntegrationTest {
 
     @Test
     void orderingAsapOutsideWorkingHoursFails() {
-        String token = login(CUSTOMER);
         clock.set(Instant.parse("2026-11-02T15:30:00Z"));
+        String token = login(CUSTOMER); // sign in after the clock jump: access tokens live 15 minutes of fake time
         Map<String, Object> req = new java.util.LinkedHashMap<>(orderRequest(List.of(line(variantId("romantika", "SMALL"), 1))));
         req.remove("slot");
         req.put("asap", true);

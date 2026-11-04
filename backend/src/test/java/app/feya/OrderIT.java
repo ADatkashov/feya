@@ -168,9 +168,12 @@ class OrderIT extends IntegrationTest {
         int before = stock("Достык", "romantika", "SMALL");
         String id = createOrder(token, List.of(line(variantId("romantika", "SMALL"), 2))).text("id");
         assertThat(stock("Достык", "romantika", "SMALL")).isEqualTo(before - 2);
+        // OrderEntity stamps createdAt with the system clock, while this test drives the fake clock: pin it explicitly.
+        sql("update orders set created_at = ? where id = ?", java.sql.Timestamp.from(clock.instant()), UUID.fromString(id));
         clock.advance(Duration.ofMinutes(31));
         assertThat(orderService.expireUnpaidBefore(clock.instant().minus(Duration.ofMinutes(30)))).isEqualTo(1);
-        assertThat(GET("/orders/" + id, token).text("status")).isEqualTo("CANCELLED");
+        // The 15-minute access token expired together with the clock jump: sign in again.
+        assertThat(GET("/orders/" + id, login(CUSTOMER)).text("status")).isEqualTo("CANCELLED");
         assertThat(stock("Достык", "romantika", "SMALL")).isEqualTo(before);
     }
 
