@@ -13,11 +13,7 @@ concurrency:
 jobs:
   backend:
     name: Backend (tests + build)
-    # Repo variable CI_RUNS_ON switches to a self-hosted runner, e.g. ["self-hosted","linux"]
-    # (docs/CI.md "Self-hosted runner"); unset = GitHub-hosted.
-    runs-on: ${{ fromJSON(vars.CI_RUNS_ON || '"ubuntu-latest"') }}
-    # Never run fork code on a self-hosted runner.
-    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
     services:
       postgres:
         image: postgres:16-alpine
@@ -25,7 +21,7 @@ jobs:
           POSTGRES_DB: feya_test
           POSTGRES_USER: feya
           POSTGRES_PASSWORD: feya
-        ports: ["5432"]  # random host port: a persistent runner may already use 5432
+        ports: ["5432"]
         options: >-
           --health-cmd "pg_isready -U feya -d feya_test"
           --health-interval 5s --health-timeout 3s --health-retries 10
@@ -38,8 +34,7 @@ jobs:
         with:
           distribution: temurin
           java-version: "21"
-          # Self-hosted runners keep ~/.gradle on disk; skip the cloud cache (Actions storage quota).
-          cache: ${{ vars.CI_RUNS_ON == '' && 'gradle' || '' }}
+          cache: gradle
       - name: Test
         env:
           FEYA_TEST_DB_URL: jdbc:postgresql://localhost:${{ job.services.postgres.ports['5432'] }}/feya_test
@@ -58,11 +53,7 @@ jobs:
 
   mobile:
     name: Mobile (analyze + test + web build)
-    # Repo variable CI_RUNS_ON switches to a self-hosted runner, e.g. ["self-hosted","linux"]
-    # (docs/CI.md "Self-hosted runner"); unset = GitHub-hosted.
-    runs-on: ${{ fromJSON(vars.CI_RUNS_ON || '"ubuntu-latest"') }}
-    # Never run fork code on a self-hosted runner.
-    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
     defaults:
       run:
         working-directory: mobile
@@ -72,8 +63,7 @@ jobs:
         with:
           flutter-version: "3.47.8"
           channel: stable
-          # Self-hosted runners keep the SDK on disk; skip the cloud cache (Actions storage quota).
-          cache: ${{ vars.CI_RUNS_ON == '' }}
+          cache: true
       - run: flutter pub get
       - name: Format check
         run: dart format --output=none --set-exit-if-changed lib test
@@ -86,11 +76,7 @@ jobs:
 
   docker:
     name: Docker image + compose config
-    # Repo variable CI_RUNS_ON switches to a self-hosted runner, e.g. ["self-hosted","linux"]
-    # (docs/CI.md "Self-hosted runner"); unset = GitHub-hosted.
-    runs-on: ${{ fromJSON(vars.CI_RUNS_ON || '"ubuntu-latest"') }}
-    # Never run fork code on a self-hosted runner.
-    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - name: Validate compose file
@@ -103,11 +89,7 @@ jobs:
 
   secrets-scan:
     name: No committed secrets
-    # Repo variable CI_RUNS_ON switches to a self-hosted runner, e.g. ["self-hosted","linux"]
-    # (docs/CI.md "Self-hosted runner"); unset = GitHub-hosted.
-    runs-on: ${{ fromJSON(vars.CI_RUNS_ON || '"ubuntu-latest"') }}
-    # Never run fork code on a self-hosted runner.
-    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - name: Look for private keys and env files
