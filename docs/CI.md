@@ -2,7 +2,7 @@
 
 Workflow: [`.github/workflows/ci.yml`](../.github/workflows/ci.yml) — четыре джоба: `Backend` (тесты на PostgreSQL + `bootJar`),
 `Mobile` (format, analyze, test, web build), `Docker` (compose config + образ бэкенда), `No committed secrets`.
-Запуск: push в `main`, `pull_request` (только из этого же репозитория — форки на раннер не пускаются), вручную — нет.
+Запуск: push в `main`, `pull_request` (только из этого же репозитория — форки на раннер не пускаются), вручную (`workflow_dispatch`) — да.
 
 ## Self-hosted runner
 
