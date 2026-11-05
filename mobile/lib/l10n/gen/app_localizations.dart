@@ -1880,6 +1880,210 @@ abstract class AppL10n {
   /// In ru, this message translates to:
   /// **'Состав может незначительно отличаться по сезону. Фото ориентировочные.'**
   String get termsS3B;
+
+  /// No description provided for @courierMode.
+  ///
+  /// In ru, this message translates to:
+  /// **'Режим курьера'**
+  String get courierMode;
+
+  /// No description provided for @courierTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'Курьер'**
+  String get courierTitle;
+
+  /// No description provided for @courierNoAccess.
+  ///
+  /// In ru, this message translates to:
+  /// **'Раздел доступен только курьерам'**
+  String get courierNoAccess;
+
+  /// No description provided for @courierOnShift.
+  ///
+  /// In ru, this message translates to:
+  /// **'На смене'**
+  String get courierOnShift;
+
+  /// No description provided for @courierShiftOn.
+  ///
+  /// In ru, this message translates to:
+  /// **'Смена идёт. Можно брать заказы.'**
+  String get courierShiftOn;
+
+  /// No description provided for @courierShiftHint.
+  ///
+  /// In ru, this message translates to:
+  /// **'Начните смену, чтобы брать заказы'**
+  String get courierShiftHint;
+
+  /// No description provided for @courierShareLocation.
+  ///
+  /// In ru, this message translates to:
+  /// **'Передавать геопозицию'**
+  String get courierShareLocation;
+
+  /// No description provided for @courierShareHint.
+  ///
+  /// In ru, this message translates to:
+  /// **'Клиент видит курьера на карте, пока везёте его заказ'**
+  String get courierShareHint;
+
+  /// No description provided for @courierLocationActive.
+  ///
+  /// In ru, this message translates to:
+  /// **'Геопозиция передаётся'**
+  String get courierLocationActive;
+
+  /// No description provided for @courierLocationDenied.
+  ///
+  /// In ru, this message translates to:
+  /// **'Нет доступа к геопозиции. Разрешите его в настройках телефона.'**
+  String get courierLocationDenied;
+
+  /// No description provided for @courierLocationServiceOff.
+  ///
+  /// In ru, this message translates to:
+  /// **'Геолокация выключена на устройстве'**
+  String get courierLocationServiceOff;
+
+  /// No description provided for @courierNotificationTitle.
+  ///
+  /// In ru, this message translates to:
+  /// **'FEYA — смена идёт'**
+  String get courierNotificationTitle;
+
+  /// No description provided for @courierNotificationText.
+  ///
+  /// In ru, this message translates to:
+  /// **'Передаётся геопозиция для клиентов'**
+  String get courierNotificationText;
+
+  /// No description provided for @courierTabMine.
+  ///
+  /// In ru, this message translates to:
+  /// **'Мои заказы'**
+  String get courierTabMine;
+
+  /// No description provided for @courierTabAvailable.
+  ///
+  /// In ru, this message translates to:
+  /// **'Доступные'**
+  String get courierTabAvailable;
+
+  /// No description provided for @courierNoMine.
+  ///
+  /// In ru, this message translates to:
+  /// **'Нет активных заказов'**
+  String get courierNoMine;
+
+  /// No description provided for @courierNoAvailable.
+  ///
+  /// In ru, this message translates to:
+  /// **'Нет заказов, готовых к выдаче'**
+  String get courierNoAvailable;
+
+  /// No description provided for @courierPickup.
+  ///
+  /// In ru, this message translates to:
+  /// **'Забрать'**
+  String get courierPickup;
+
+  /// No description provided for @courierDeliverTo.
+  ///
+  /// In ru, this message translates to:
+  /// **'Доставить'**
+  String get courierDeliverTo;
+
+  /// No description provided for @courierRecipient.
+  ///
+  /// In ru, this message translates to:
+  /// **'Получатель'**
+  String get courierRecipient;
+
+  /// No description provided for @courierInstructions.
+  ///
+  /// In ru, this message translates to:
+  /// **'Комментарий'**
+  String get courierInstructions;
+
+  /// No description provided for @courierAsap.
+  ///
+  /// In ru, this message translates to:
+  /// **'Срочно (ASAP)'**
+  String get courierAsap;
+
+  /// No description provided for @courierClaim.
+  ///
+  /// In ru, this message translates to:
+  /// **'Взять заказ'**
+  String get courierClaim;
+
+  /// No description provided for @courierPickedUp.
+  ///
+  /// In ru, this message translates to:
+  /// **'Забрал заказ'**
+  String get courierPickedUp;
+
+  /// No description provided for @courierOnTheWay.
+  ///
+  /// In ru, this message translates to:
+  /// **'Выехал к клиенту'**
+  String get courierOnTheWay;
+
+  /// No description provided for @courierMarkDelivered.
+  ///
+  /// In ru, this message translates to:
+  /// **'Отметить доставленным'**
+  String get courierMarkDelivered;
+
+  /// No description provided for @courierRelease.
+  ///
+  /// In ru, this message translates to:
+  /// **'Вернуть заказ в пул'**
+  String get courierRelease;
+
+  /// No description provided for @courierReleaseConfirm.
+  ///
+  /// In ru, this message translates to:
+  /// **'Вернуть заказ другим курьерам?'**
+  String get courierReleaseConfirm;
+
+  /// No description provided for @courierDeliveredConfirm.
+  ///
+  /// In ru, this message translates to:
+  /// **'Подтвердить, что заказ вручён получателю?'**
+  String get courierDeliveredConfirm;
+
+  /// No description provided for @courierConfirm.
+  ///
+  /// In ru, this message translates to:
+  /// **'Подтвердить'**
+  String get courierConfirm;
+
+  /// No description provided for @courierNavigate.
+  ///
+  /// In ru, this message translates to:
+  /// **'Маршрут'**
+  String get courierNavigate;
+
+  /// No description provided for @courierCall.
+  ///
+  /// In ru, this message translates to:
+  /// **'Позвонить получателю'**
+  String get courierCall;
+
+  /// No description provided for @courierErrNotOnShift.
+  ///
+  /// In ru, this message translates to:
+  /// **'Сначала начните смену'**
+  String get courierErrNotOnShift;
+
+  /// No description provided for @courierErrClaimed.
+  ///
+  /// In ru, this message translates to:
+  /// **'Этот заказ уже взял другой курьер'**
+  String get courierErrClaimed;
 }
 
 class _AppL10nDelegate extends LocalizationsDelegate<AppL10n> {

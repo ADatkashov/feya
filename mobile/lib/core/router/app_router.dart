@@ -9,6 +9,7 @@ import '../../features/catalog/catalog_screen.dart';
 import '../../features/checkout/address_form_screen.dart';
 import '../../features/checkout/checkout_screen.dart';
 import '../../features/checkout/payment_screen.dart';
+import '../../features/courier/courier_screen.dart';
 import '../../features/home/home_screen.dart';
 import '../../features/orders/order_detail_screen.dart';
 import '../../features/orders/orders_screen.dart';
@@ -22,6 +23,7 @@ bool _requiresAuth(String path) =>
     path.startsWith('/checkout') ||
     path.startsWith('/orders/') ||
     path.startsWith('/addresses') ||
+    path.startsWith('/courier') ||
     path.startsWith('/favorites') ||
     path.startsWith('/notifications') ||
     path == '/profile/edit' ||
@@ -118,6 +120,7 @@ final routerProvider = Provider<GoRouter>((ref) {
         path: '/orders/:id/tracking',
         builder: (c, s) => TrackingScreen(orderId: s.pathParameters['id']!),
       ),
+      GoRoute(path: '/courier', builder: (c, s) => const CourierScreen()),
       GoRoute(path: '/addresses', builder: (c, s) => const AddressesScreen()),
       GoRoute(
         path: '/addresses/edit',

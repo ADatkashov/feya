@@ -28,6 +28,12 @@ class AppConfig {
     defaultValue: 'https://2gis.kz/almaty/geo/{lng},{lat}',
   );
 
+  /// Template for searching an address in a maps app (courier navigation). `{query}` is URL-encoded.
+  static const String mapSearchTemplate = String.fromEnvironment(
+    'MAP_SEARCH_TEMPLATE',
+    defaultValue: 'https://2gis.kz/almaty/search/{query}',
+  );
+
   static const String supportPhone = String.fromEnvironment(
     'SUPPORT_PHONE',
     defaultValue: '+77000000004',
