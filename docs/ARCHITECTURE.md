@@ -5,7 +5,7 @@
 ```
  Flutter-приложение клиента ─┐                         ┌─ PostgreSQL 16 (Flyway-миграции)
  Веб-консоль персонала (/admin) ─┼─ HTTPS ─ Spring Boot ─┤
- (будущее приложение курьера) ──┘   (модульный монолит)  └─ локальное/объектное хранилище медиа
+ Режим курьера в том же приложении ─┘   (модульный монолит)  └─ локальное/объектное хранилище медиа
                                         │
                                         ├─ PaymentProvider (sandbox | реальный шлюз)
                                         ├─ SmsSender (OTP)   ├─ PushSender (FCM)
@@ -118,6 +118,10 @@ stateDiagram-v2
 времени в поясе Алматы независимо от пояса устройства.
 
 ## Клиент (Flutter)
+
+Режим курьера (`features/courier`, роль `COURIER`): смена, пул заказов (опрос каждые 15 с, пока экран открыт),
+статусы, а `CourierLocationController` живёт всю сессию и шлёт позицию (не чаще раза в 10 с, сервер считает позицию
+свежей 5 минут) только на смене и при включённой передаче; источник GPS — `LocationSource` (в тестах подменяется).
 
 Feature-first структура (`mobile/lib/features/*`), Riverpod (Notifier/AsyncValue), GoRouter с `StatefulShellRoute`
 (5 вкладок) и redirect для маршрутов, требующих входа, Dio с перехватчиками (bearer, язык, single-flight refresh,

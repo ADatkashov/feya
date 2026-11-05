@@ -47,6 +47,10 @@ String errorText(BuildContext context, Object error) {
         return l.errOrderNotPayable;
       case 'REVIEW_EXISTS':
         return l.errReviewExists;
+      case 'NOT_ON_SHIFT':
+        return l.courierErrNotOnShift;
+      case 'ALREADY_CLAIMED':
+        return l.courierErrClaimed;
       case 'VALIDATION_FAILED':
         return l.errValidation;
     }

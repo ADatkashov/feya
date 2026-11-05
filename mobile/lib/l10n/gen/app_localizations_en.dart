@@ -988,4 +988,110 @@ class AppL10nEn extends AppL10n {
   @override
   String get termsS3B =>
       'Composition may vary slightly by season. Photos are illustrative.';
+
+  @override
+  String get courierMode => 'Courier mode';
+
+  @override
+  String get courierTitle => 'Courier';
+
+  @override
+  String get courierNoAccess => 'This section is for couriers only';
+
+  @override
+  String get courierOnShift => 'On shift';
+
+  @override
+  String get courierShiftOn => 'Shift is on. You can claim orders.';
+
+  @override
+  String get courierShiftHint => 'Start your shift to claim orders';
+
+  @override
+  String get courierShareLocation => 'Share my location';
+
+  @override
+  String get courierShareHint =>
+      'The customer sees you on the map while you carry their order';
+
+  @override
+  String get courierLocationActive => 'Location is being shared';
+
+  @override
+  String get courierLocationDenied =>
+      'Location access is denied. Allow it in the phone settings.';
+
+  @override
+  String get courierLocationServiceOff =>
+      'Location is turned off on this device';
+
+  @override
+  String get courierNotificationTitle => 'FEYA — shift in progress';
+
+  @override
+  String get courierNotificationText => 'Sharing your location with customers';
+
+  @override
+  String get courierTabMine => 'My orders';
+
+  @override
+  String get courierTabAvailable => 'Available';
+
+  @override
+  String get courierNoMine => 'No active orders';
+
+  @override
+  String get courierNoAvailable => 'No orders ready for pickup';
+
+  @override
+  String get courierPickup => 'Pick up';
+
+  @override
+  String get courierDeliverTo => 'Deliver to';
+
+  @override
+  String get courierRecipient => 'Recipient';
+
+  @override
+  String get courierInstructions => 'Notes';
+
+  @override
+  String get courierAsap => 'ASAP';
+
+  @override
+  String get courierClaim => 'Claim order';
+
+  @override
+  String get courierPickedUp => 'Picked up';
+
+  @override
+  String get courierOnTheWay => 'On my way';
+
+  @override
+  String get courierMarkDelivered => 'Mark as delivered';
+
+  @override
+  String get courierRelease => 'Release order';
+
+  @override
+  String get courierReleaseConfirm => 'Return this order to the pool?';
+
+  @override
+  String get courierDeliveredConfirm =>
+      'Confirm the order was handed to the recipient?';
+
+  @override
+  String get courierConfirm => 'Confirm';
+
+  @override
+  String get courierNavigate => 'Navigate';
+
+  @override
+  String get courierCall => 'Call recipient';
+
+  @override
+  String get courierErrNotOnShift => 'Start your shift first';
+
+  @override
+  String get courierErrClaimed => 'Another courier already claimed this order';
 }

@@ -986,4 +986,110 @@ class AppL10nKk extends AppL10n {
   @override
   String get termsS3B =>
       'Құрамы маусымға қарай аздап өзгеше болуы мүмкін. Фотолар болжамды.';
+
+  @override
+  String get courierMode => 'Курьер режимі';
+
+  @override
+  String get courierTitle => 'Курьер';
+
+  @override
+  String get courierNoAccess => 'Бөлім тек курьерлерге қолжетімді';
+
+  @override
+  String get courierOnShift => 'Ауысымда';
+
+  @override
+  String get courierShiftOn => 'Ауысым жүріп жатыр. Тапсырыс алуға болады.';
+
+  @override
+  String get courierShiftHint => 'Тапсырыс алу үшін ауысымды бастаңыз';
+
+  @override
+  String get courierShareLocation => 'Геолокацияны жіберу';
+
+  @override
+  String get courierShareHint =>
+      'Тапсырысты жеткізіп жатқанда клиент сізді картадан көреді';
+
+  @override
+  String get courierLocationActive => 'Геолокация жіберілуде';
+
+  @override
+  String get courierLocationDenied =>
+      'Геолокацияға рұқсат жоқ. Телефон баптауларында рұқсат беріңіз.';
+
+  @override
+  String get courierLocationServiceOff => 'Құрылғыда геолокация өшірулі';
+
+  @override
+  String get courierNotificationTitle => 'FEYA — ауысым жүріп жатыр';
+
+  @override
+  String get courierNotificationText => 'Клиенттерге геолокация жіберілуде';
+
+  @override
+  String get courierTabMine => 'Менің тапсырыстарым';
+
+  @override
+  String get courierTabAvailable => 'Қолжетімді';
+
+  @override
+  String get courierNoMine => 'Белсенді тапсырыстар жоқ';
+
+  @override
+  String get courierNoAvailable => 'Беруге дайын тапсырыстар жоқ';
+
+  @override
+  String get courierPickup => 'Алып кету';
+
+  @override
+  String get courierDeliverTo => 'Жеткізу';
+
+  @override
+  String get courierRecipient => 'Алушы';
+
+  @override
+  String get courierInstructions => 'Түсініктеме';
+
+  @override
+  String get courierAsap => 'Шұғыл (ASAP)';
+
+  @override
+  String get courierClaim => 'Тапсырысты алу';
+
+  @override
+  String get courierPickedUp => 'Тапсырысты алдым';
+
+  @override
+  String get courierOnTheWay => 'Клиентке шықтым';
+
+  @override
+  String get courierMarkDelivered => 'Жеткізілді деп белгілеу';
+
+  @override
+  String get courierRelease => 'Тапсырысты пулға қайтару';
+
+  @override
+  String get courierReleaseConfirm =>
+      'Тапсырысты басқа курьерлерге қайтарасыз ба?';
+
+  @override
+  String get courierDeliveredConfirm =>
+      'Тапсырыс алушыға тапсырылғанын растайсыз ба?';
+
+  @override
+  String get courierConfirm => 'Растау';
+
+  @override
+  String get courierNavigate => 'Бағыт';
+
+  @override
+  String get courierCall => 'Алушыға қоңырау шалу';
+
+  @override
+  String get courierErrNotOnShift => 'Алдымен ауысымды бастаңыз';
+
+  @override
+  String get courierErrClaimed => 'Бұл тапсырысты басқа курьер алып қойған';
 }

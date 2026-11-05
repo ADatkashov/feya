@@ -991,4 +991,109 @@ class AppL10nRu extends AppL10n {
   @override
   String get termsS3B =>
       'Состав может незначительно отличаться по сезону. Фото ориентировочные.';
+
+  @override
+  String get courierMode => 'Режим курьера';
+
+  @override
+  String get courierTitle => 'Курьер';
+
+  @override
+  String get courierNoAccess => 'Раздел доступен только курьерам';
+
+  @override
+  String get courierOnShift => 'На смене';
+
+  @override
+  String get courierShiftOn => 'Смена идёт. Можно брать заказы.';
+
+  @override
+  String get courierShiftHint => 'Начните смену, чтобы брать заказы';
+
+  @override
+  String get courierShareLocation => 'Передавать геопозицию';
+
+  @override
+  String get courierShareHint =>
+      'Клиент видит курьера на карте, пока везёте его заказ';
+
+  @override
+  String get courierLocationActive => 'Геопозиция передаётся';
+
+  @override
+  String get courierLocationDenied =>
+      'Нет доступа к геопозиции. Разрешите его в настройках телефона.';
+
+  @override
+  String get courierLocationServiceOff => 'Геолокация выключена на устройстве';
+
+  @override
+  String get courierNotificationTitle => 'FEYA — смена идёт';
+
+  @override
+  String get courierNotificationText => 'Передаётся геопозиция для клиентов';
+
+  @override
+  String get courierTabMine => 'Мои заказы';
+
+  @override
+  String get courierTabAvailable => 'Доступные';
+
+  @override
+  String get courierNoMine => 'Нет активных заказов';
+
+  @override
+  String get courierNoAvailable => 'Нет заказов, готовых к выдаче';
+
+  @override
+  String get courierPickup => 'Забрать';
+
+  @override
+  String get courierDeliverTo => 'Доставить';
+
+  @override
+  String get courierRecipient => 'Получатель';
+
+  @override
+  String get courierInstructions => 'Комментарий';
+
+  @override
+  String get courierAsap => 'Срочно (ASAP)';
+
+  @override
+  String get courierClaim => 'Взять заказ';
+
+  @override
+  String get courierPickedUp => 'Забрал заказ';
+
+  @override
+  String get courierOnTheWay => 'Выехал к клиенту';
+
+  @override
+  String get courierMarkDelivered => 'Отметить доставленным';
+
+  @override
+  String get courierRelease => 'Вернуть заказ в пул';
+
+  @override
+  String get courierReleaseConfirm => 'Вернуть заказ другим курьерам?';
+
+  @override
+  String get courierDeliveredConfirm =>
+      'Подтвердить, что заказ вручён получателю?';
+
+  @override
+  String get courierConfirm => 'Подтвердить';
+
+  @override
+  String get courierNavigate => 'Маршрут';
+
+  @override
+  String get courierCall => 'Позвонить получателю';
+
+  @override
+  String get courierErrNotOnShift => 'Сначала начните смену';
+
+  @override
+  String get courierErrClaimed => 'Этот заказ уже взял другой курьер';
 }

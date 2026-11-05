@@ -110,6 +110,18 @@ class ProfileScreen extends ConsumerWidget {
             ),
           ),
           const SizedBox(height: 16),
+          if (user?.roles.contains('COURIER') ?? false) ...[
+            _Group(
+              children: [
+                _MenuTile(
+                  icon: Icons.two_wheeler_rounded,
+                  title: l.courierMode,
+                  onTap: () => context.push('/courier'),
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
+          ],
           _Group(
             children: [
               _MenuTile(

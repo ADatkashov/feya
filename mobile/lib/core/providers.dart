@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../data/repositories/courier_repository.dart';
 import '../data/repositories/repositories.dart';
 import 'network/api_client.dart';
 import 'storage/token_store.dart';
@@ -72,6 +73,9 @@ final paymentRepositoryProvider = Provider(
 );
 final notificationRepositoryProvider = Provider(
   (ref) => NotificationRepository(ref.watch(apiClientProvider)),
+);
+final courierRepositoryProvider = Provider(
+  (ref) => CourierRepository(ref.watch(apiClientProvider)),
 );
 final cartStoreProvider = Provider(
   (ref) => CartStore(ref.watch(sharedPrefsProvider)),
